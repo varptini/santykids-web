@@ -239,8 +239,18 @@
       box-shadow: 0 4px 20px rgba(0,0,0,.07);
       transition: transform .3s, box-shadow .3s;
       display: flex; flex-direction: column;
+      position: relative;
     }
     .cat-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(212,121,154,.22); }
+    .cat-card.agotado { opacity: .72; }
+    .cat-card.agotado:hover { transform: none; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+    .badge-agotado {
+      position: absolute; top: 14px; left: 14px; z-index: 2;
+      background: rgba(60,60,60,.82); color: #fff;
+      font-size: .72rem; font-weight: 700; letter-spacing: .05em;
+      padding: .28rem .7rem; border-radius: 50px;
+      text-transform: uppercase;
+    }
     .cat-img-wrap {
       width: 100%; aspect-ratio: 1/1; overflow: hidden;
       background: var(--perla);
@@ -279,6 +289,14 @@
       transition: box-shadow .2s;
     }
     .cat-btn:hover { box-shadow: 0 6px 18px rgba(37,211,102,.4); }
+    .cat-btn-agotado {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: var(--perla); color: var(--gris);
+      padding: .55rem 1.1rem; border-radius: 50px;
+      font-size: .82rem; font-weight: 500;
+      border: 1px solid rgba(0,0,0,.1);
+      cursor: default; align-self: flex-start;
+    }
     .catalogo-empty {
       grid-column: 1/-1; text-align: center;
       padding: 3rem; color: var(--gris); font-size: .95rem;
@@ -557,21 +575,26 @@
       grid.innerHTML = '<div class="catalogo-empty">Próximamente nuestros productos aquí. ¡Síguenos en redes! 🎀</div>';
       return;
     }
-    grid.innerHTML = products.map(p => `
-      <div class="cat-card">
-        <div class="cat-img-wrap">
-          <img src="${p.imagen}" alt="${p.tipo} ${p.color}" loading="lazy" />
-        </div>
-        <div class="cat-info">
-          <div class="cat-tipo">${p.tipo} ${p.color}</div>
-          <div class="cat-meta">${p.material}</div>
-          <div class="cat-caption">${p.caption}</div>
-          <a class="cat-btn" href="${waLink(p.tipo, p.color)}" target="_blank">
-            💬 Pedir este moño
-          </a>
-        </div>
-      </div>
-    `).join('');
+    grid.innerHTML = products.map(p => {
+      const agotado = p.disponible === false;
+      const badge = agotado ? '<div class="badge-agotado">Agotado</div>' : '';
+      const btn = agotado
+        ? '<span class="cat-btn-agotado">😔 Sin stock por ahora</span>'
+        : `<a class="cat-btn" href="${waLink(p.tipo, p.color)}" target="_blank">💬 Pedir este moño</a>`;
+      return `
+        <div class="cat-card${agotado ? ' agotado' : ''}">
+          ${badge}
+          <div class="cat-img-wrap">
+            <img src="${p.imagen}" alt="${p.tipo} ${p.color}" loading="lazy" />
+          </div>
+          <div class="cat-info">
+            <div class="cat-tipo">${p.tipo} ${p.color}</div>
+            <div class="cat-meta">${p.material}</div>
+            <div class="cat-caption">${p.caption}</div>
+            ${btn}
+          </div>
+        </div>`;
+    }).join('');
   }
 
   fetch('/catalog.json')

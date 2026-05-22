@@ -225,6 +225,77 @@
     .contacto-link:hover { background: #fce4f0; border-color: var(--rosa); }
     .contacto-link .icon { font-size: 1.2rem; }
 
+    /* ── CATÁLOGO ── */
+    .catalogo { background: #fff; }
+    .catalogo-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.8rem;
+    }
+    .cat-card {
+      background: #fff; border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,.07);
+      transition: transform .3s, box-shadow .3s;
+      display: flex; flex-direction: column;
+    }
+    .cat-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(212,121,154,.22); }
+    .cat-img-wrap {
+      width: 100%; aspect-ratio: 1/1; overflow: hidden;
+      background: var(--perla);
+    }
+    .cat-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .4s;
+    }
+    .cat-card:hover .cat-img-wrap img { transform: scale(1.05); }
+    .cat-info {
+      padding: 1.2rem 1.4rem 1.4rem;
+      display: flex; flex-direction: column; flex: 1;
+    }
+    .cat-tipo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; margin-bottom: .2rem;
+      text-transform: capitalize;
+    }
+    .cat-meta {
+      font-size: .8rem; color: var(--gris);
+      text-transform: capitalize; margin-bottom: .7rem;
+    }
+    .cat-caption {
+      font-size: .85rem; color: var(--texto);
+      line-height: 1.6; font-weight: 300;
+      flex: 1; margin-bottom: 1rem;
+      display: -webkit-box; -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .cat-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: #25D366; color: #fff;
+      padding: .55rem 1.1rem; border-radius: 50px;
+      font-size: .82rem; font-weight: 600;
+      text-decoration: none; align-self: flex-start;
+      transition: box-shadow .2s;
+    }
+    .cat-btn:hover { box-shadow: 0 6px 18px rgba(37,211,102,.4); }
+    .catalogo-empty {
+      grid-column: 1/-1; text-align: center;
+      padding: 3rem; color: var(--gris); font-size: .95rem;
+    }
+    .catalogo-loading {
+      grid-column: 1/-1; text-align: center;
+      padding: 3rem; color: var(--gris);
+    }
+    .spinner {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 3px solid var(--champagne);
+      border-top-color: var(--rosa-dark);
+      animation: spin .8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     /* ── FOOTER ── */
     footer {
       background: var(--texto); color: rgba(255,255,255,.7);
@@ -265,6 +336,7 @@
   <a href="#" class="logo">Santy<span>Kids</span></a>
   <ul>
     <li><a href="#productos">Productos</a></li>
+    <li><a href="#catalogo">Catálogo</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
@@ -325,6 +397,21 @@
       <div class="card-icon">💝</div>
       <h3>Mayoreo</h3>
       <p>Precios especiales para revendedoras y tiendas. Pregunta por nuestros paquetes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section class="catalogo" id="catalogo">
+  <div class="section-title">
+    <h2>Catálogo de Moños</h2>
+    <p>Nuestros productos más recientes — haz clic para pedir el tuyo</p>
+    <div class="divider"></div>
+  </div>
+  <div class="catalogo-grid" id="catalogoGrid">
+    <div class="catalogo-loading">
+      <div class="spinner"></div>
+      <p>Cargando productos...</p>
     </div>
   </div>
 </section>
@@ -454,6 +541,45 @@
    class="wa-float" target="_blank" title="Escríbenos por WhatsApp">
   💬
 </a>
+
+<script>
+(function () {
+  const grid = document.getElementById('catalogoGrid');
+  const WA = 'https://wa.me/5217447501386';
+
+  function waLink(tipo, color) {
+    const txt = encodeURIComponent(`Hola! Vi su página y me interesa el ${tipo} ${color} 🎀`);
+    return `${WA}?text=${txt}`;
+  }
+
+  function renderCards(products) {
+    if (!products.length) {
+      grid.innerHTML = '<div class="catalogo-empty">Próximamente nuestros productos aquí. ¡Síguenos en redes! 🎀</div>';
+      return;
+    }
+    grid.innerHTML = products.map(p => `
+      <div class="cat-card">
+        <div class="cat-img-wrap">
+          <img src="${p.imagen}" alt="${p.tipo} ${p.color}" loading="lazy" />
+        </div>
+        <div class="cat-info">
+          <div class="cat-tipo">${p.tipo} ${p.color}</div>
+          <div class="cat-meta">${p.material}</div>
+          <div class="cat-caption">${p.caption}</div>
+          <a class="cat-btn" href="${waLink(p.tipo, p.color)}" target="_blank">
+            💬 Pedir este moño
+          </a>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  fetch('/catalog.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(renderCards)
+    .catch(() => renderCards([]));
+})();
+</script>
 
 </body>
 </html>

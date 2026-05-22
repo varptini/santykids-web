@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Santy Kids — Accesorios y Ropa para Bebés y Niños</title>
+  <meta name="description" content="Moños artesanales, ropa y accesorios para bebés y niños. Diseños únicos hechos a mano. Envíos a todo México." />
+  <meta property="og:title" content="Santy Kids — Moños Artesanales" />
+  <meta property="og:description" content="Accesorios de tela hechos con amor para tu cabello." />
+  <meta property="og:image" content="https://santykids.com/preview.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rosa:      #f2a7c3;
+      --rosa-dark: #d4799a;
+      --perla:     #fdf6f0;
+      --champagne: #f7e7ce;
+      --texto:     #3a2d35;
+      --gris:      #7a6a72;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--texto);
+      background: #fff;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(242,167,195,0.2);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--rosa-dark);
+      text-decoration: none;
+    }
+    .logo span { color: var(--texto); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a {
+      text-decoration: none; color: var(--texto);
+      font-size: 0.9rem; font-weight: 500;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--rosa-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fdf0f7 0%, var(--champagne) 50%, #fdf6f0 100%);
+      display: flex; align-items: center;
+      padding: 6rem 2rem 4rem;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .hero-text h1 em {
+      font-style: normal;
+      color: var(--rosa-dark);
+    }
+    .hero-text p {
+      font-size: 1.05rem; color: var(--gris);
+      line-height: 1.8; margin-bottom: 2rem;
+      font-weight: 300;
+    }
+    .btn {
+      display: inline-block;
+      padding: .85rem 2.2rem;
+      border-radius: 50px;
+      font-weight: 600; font-size: .95rem;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,121,154,.35); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rosa), var(--rosa-dark));
+      color: #fff;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid var(--rosa-dark);
+      color: var(--rosa-dark);
+      margin-left: 1rem;
+    }
+    .btn-secondary:hover { box-shadow: none; background: var(--rosa-dark); color: #fff; }
+
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+    }
+    .bow-circle {
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #fce4f0, #f9d5e8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9rem;
+      box-shadow: 0 20px 60px rgba(212,121,154,.25), inset 0 -10px 30px rgba(255,255,255,.6);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-14px); }
+    }
+
+    /* ── SECCIÓN GENÉRICA ── */
+    section { padding: 5rem 2rem; }
+    .section-title {
+      text-align: center; margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-bottom: .5rem;
+    }
+    .section-title p { color: var(--gris); font-weight: 300; }
+    .divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--rosa), var(--rosa-dark));
+      border-radius: 2px; margin: .8rem auto 0;
+    }
+
+    /* ── PRODUCTOS ── */
+    .productos { background: var(--perla); }
+    .productos-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.8rem;
+    }
+    .card {
+      background: #fff; border-radius: 20px;
+      padding: 2rem 1.5rem; text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(212,121,154,.18); }
+    .card-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; margin-bottom: .5rem;
+    }
+    .card p { font-size: .9rem; color: var(--gris); line-height: 1.7; font-weight: 300; }
+
+    /* ── POR QUÉ NOSOTROS ── */
+    .features-grid {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;
+    }
+    .feature { text-align: center; }
+    .feature-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, #fce4f0, #f9d5e8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; margin: 0 auto 1rem;
+    }
+    .feature h3 { font-size: 1rem; margin-bottom: .3rem; }
+    .feature p { font-size: .85rem; color: var(--gris); font-weight: 300; line-height: 1.6; }
+
+    /* ── COLORES ── */
+    .colores { background: var(--perla); }
+    .paleta {
+      max-width: 700px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem;
+    }
+    .color-chip {
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    }
+    .color-circle {
+      width: 72px; height: 72px; border-radius: 50%;
+      box-shadow: 0 4px 14px rgba(0,0,0,.12);
+    }
+    .color-chip span { font-size: .8rem; color: var(--gris); font-weight: 500; }
+
+    /* ── CTA ── */
+    .cta {
+      background: linear-gradient(135deg, var(--rosa-dark), #c0608a);
+      text-align: center; color: #fff;
+    }
+    .cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-bottom: 1rem;
+    }
+    .cta p { font-weight: 300; margin-bottom: 2rem; opacity: .9; }
+    .btn-white {
+      background: #fff; color: var(--rosa-dark);
+      font-weight: 600;
+    }
+    .btn-white:hover { box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+    .btn-wa {
+      background: #25D366; color: #fff;
+      margin-left: 1rem;
+    }
+    .btn-wa:hover { box-shadow: 0 8px 24px rgba(37,211,102,.4); }
+
+    /* ── CONTACTO ── */
+    .contacto-inner {
+      max-width: 700px; margin: 0 auto; text-align: center;
+    }
+    .contacto-links {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; margin-top: 2rem;
+    }
+    .contacto-link {
+      display: flex; align-items: center; gap: .6rem;
+      background: var(--perla); border-radius: 50px;
+      padding: .7rem 1.4rem; text-decoration: none;
+      color: var(--texto); font-size: .9rem; font-weight: 500;
+      border: 1px solid rgba(212,121,154,.2);
+      transition: background .2s, border-color .2s;
+    }
+    .contacto-link:hover { background: #fce4f0; border-color: var(--rosa); }
+    .contacto-link .icon { font-size: 1.2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--texto); color: rgba(255,255,255,.7);
+      text-align: center; padding: 2rem;
+      font-size: .85rem;
+    }
+    footer strong { color: #fff; }
+
+    /* ── WHATSAPP FLOTANTE ── */
+    .wa-float {
+      position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 200;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; text-decoration: none;
+      box-shadow: 0 6px 20px rgba(37,211,102,.5);
+      animation: pulse-wa 2.5s infinite;
+    }
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 6px 20px rgba(37,211,102,.5); }
+      50%       { box-shadow: 0 6px 32px rgba(37,211,102,.8); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+      .hero-visual { order: -1; }
+      .bow-circle { width: 260px; height: 260px; font-size: 6rem; }
+      nav ul { display: none; }
+      .btn-secondary { margin-left: 0; margin-top: .8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Santy<span>Kids</span></a>
+  <ul>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>Accesorios y moda<br/>para tus <em>pequeños</em></h1>
+      <p>Moños artesanales, ropa y accesorios para bebés y niños.<br/>
+         Diseños únicos hechos a mano con los mejores materiales.</p>
+      <a href="https://wa.me/5217447501386?text=Hola!%20Vi%20su%20página%20y%20me%20interesan%20sus%20moños%20🎀" class="btn btn-primary" target="_blank">
+        Pedir por WhatsApp
+      </a>
+      <a href="#productos" class="btn btn-secondary">Ver catálogo</a>
+    </div>
+    <div class="hero-visual">
+      <div class="bow-circle">🎀</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS -->
+<section class="productos" id="productos">
+  <div class="section-title">
+    <h2>Lo que encontrarás</h2>
+    <p>Todo para vestir y adornar a tus pequeños con amor</p>
+    <div class="divider"></div>
+  </div>
+  <div class="productos-grid">
+    <div class="card">
+      <div class="card-icon">🎀</div>
+      <h3>Moños Artesanales</h3>
+      <p>Satén, terciopelo, organza y tela. En todos los colores para niñas y bebés.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👶</div>
+      <h3>Accesorios para Bebé</h3>
+      <p>Diademas, turbantes, clips y coronitas para recién nacidas y bebés.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👗</div>
+      <h3>Ropa para Niños</h3>
+      <p>Prendas cómodas y adorables para bebés y niños. Calidad y estilo.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎁</div>
+      <h3>Sets y Regalos</h3>
+      <p>Conjuntos listos para regalar en baby shower, bautizo o cumpleaños.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">✂️</div>
+      <h3>Pedidos Personalizados</h3>
+      <p>Colores, tamaños y diseños a tu gusto. Ideal para uniformes y eventos.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">💝</div>
+      <h3>Mayoreo</h3>
+      <p>Precios especiales para revendedoras y tiendas. Pregunta por nuestros paquetes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ NOSOTROS -->
+<section id="nosotros">
+  <div class="section-title">
+    <h2>¿Por qué elegir Santy Kids?</h2>
+    <p>Más de un compromiso con la calidad artesanal</p>
+    <div class="divider"></div>
+  </div>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">🤝</div>
+      <h3>Hechos a mano</h3>
+      <p>Cada moño se elabora manualmente con dedicación y cuidado.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎨</div>
+      <h3>Colores vibrantes</h3>
+      <p>Materiales de alta calidad que conservan sus colores lavado tras lavado.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📦</div>
+      <h3>Envíos a México</h3>
+      <p>Enviamos a todo el país de forma rápida y segura.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💬</div>
+      <h3>Atención personalizada</h3>
+      <p>Te asesoramos para encontrar el diseño perfecto para ti.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PALETA DE COLORES -->
+<section class="colores">
+  <div class="section-title">
+    <h2>Nuestra paleta</h2>
+    <p>Disponibles en los colores más elegantes</p>
+    <div class="divider"></div>
+  </div>
+  <div class="paleta">
+    <div class="color-chip">
+      <div class="color-circle" style="background:#F8F4EF;border:1px solid #e0d8d0;"></div>
+      <span>Perla</span>
+    </div>
+    <div class="color-chip">
+      <div class="color-circle" style="background:#E8C4B8;"></div>
+      <span>Rosa Gold</span>
+    </div>
+    <div class="color-chip">
+      <div class="color-circle" style="background:#C9B8D8;"></div>
+      <span>Lila</span>
+    </div>
+    <div class="color-chip">
+      <div class="color-circle" style="background:#F7E7CE;"></div>
+      <span>Champagne</span>
+    </div>
+    <div class="color-chip">
+      <div class="color-circle" style="background:#f2a7c3;"></div>
+      <span>Rosa</span>
+    </div>
+    <div class="color-chip">
+      <div class="color-circle" style="background:#A8D8C8;"></div>
+      <span>Menta</span>
+    </div>
+    <div class="color-chip">
+      <div class="color-circle" style="background:#2C2C2C;"></div>
+      <span>Carbón</span>
+    </div>
+    <div class="color-chip">
+      <div class="color-circle" style="background:#fff;border:1px solid #ddd;"></div>
+      <span>Blanco</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>¿Buscas algo especial para tu bebé? 🎀</h2>
+  <p>Escríbenos por WhatsApp y te ayudamos a encontrar el regalo o accesorio perfecto.</p>
+  <a href="https://wa.me/5217447501386?text=Hola!%20Quiero%20información%20sobre%20sus%20moños%20🎀" class="btn btn-white" target="_blank">
+    Ver catálogo completo
+  </a>
+  <a href="https://wa.me/5217447501386?text=Hola!%20Quiero%20hacer%20un%20pedido%20🎀" class="btn btn-wa" target="_blank">
+    💬 WhatsApp
+  </a>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="contacto-inner">
+    <div class="section-title">
+      <h2>Contáctanos</h2>
+      <p>Estamos aquí para atenderte</p>
+      <div class="divider"></div>
+    </div>
+    <div class="contacto-links">
+      <a href="https://wa.me/5217447501386" class="contacto-link" target="_blank">
+        <span class="icon">💬</span> WhatsApp
+      </a>
+      <a href="mailto:admin@santykids.com" class="contacto-link">
+        <span class="icon">✉️</span> admin@santykids.com
+      </a>
+      <a href="https://instagram.com/santykids" class="contacto-link" target="_blank">
+        <span class="icon">📸</span> @santykids
+      </a>
+      <a href="https://facebook.com/santykids" class="contacto-link" target="_blank">
+        <span class="icon">📘</span> Santy Kids
+      </a>
+    </div>
+    <p style="margin-top:2rem; color:var(--gris); font-size:.9rem;">
+      📍 Florencio Villarreal, Guerrero, México
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <strong>Santy Kids</strong> — Moños artesanales hechos con amor 🎀</p>
+  <p style="margin-top:.4rem; font-size:.8rem;">admin@santykids.com · santykids.com</p>
+</footer>
+
+<!-- WhatsApp flotante -->
+<a href="https://wa.me/5217447501386?text=Hola!%20Vi%20tu%20página%20y%20me%20interesan%20sus%20moños%20🎀"
+   class="wa-float" target="_blank" title="Escríbenos por WhatsApp">
+  💬
+</a>
+
+</body>
+</html>

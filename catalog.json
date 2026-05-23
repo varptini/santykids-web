@@ -1,5 +1,13 @@
 [
   {
+    "id": 10,
+    "nombre": "Diadema Moño Iridiscente Rosa Chicle con Mariposa de Lentejuelas",
+    "imagen": "/images/products/10_1779513279856.jpg",
+    "caption": "✨ Cada vez que tu pequeña se pone esta diadema, su sonrisa brilla más que las lentejuelas. Ese moño rosa chicle con destellos iridiscentes no es solo un accesorio: es un abrazo de color, magia y ternura en su cabello. Hecho con amor para que cada día sea especial.",
+    "disponible": true,
+    "fecha": "2026-05-23T05:14:41.545Z"
+  },
+  {
     "id": 9,
     "nombre": "Moño Jumbo Multicapa Iridiscente",
     "imagen": "/images/products/9_1779511233581.jpg",

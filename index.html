@@ -588,8 +588,8 @@
             <img src="${p.imagen}" alt="${p.tipo} ${p.color}" loading="lazy" />
           </div>
           <div class="cat-info">
-            <div class="cat-tipo">${p.tipo} ${p.color}</div>
-            <div class="cat-meta">${p.material}</div>
+            <div class="cat-tipo">${p.nombre || `${p.tipo || ''} ${p.color || ''}`.trim()}</div>
+            <div class="cat-meta">${p.material || ''}</div>
             <div class="cat-caption">${p.caption}</div>
             ${btn}
           </div>

@@ -1,5 +1,13 @@
 [
   {
+    "id": 11,
+    "nombre": "Turbante Infantil Flor Fucsia",
+    "imagen": "/images/products/11_1779513902483.jpg",
+    "caption": "✨ Cada día es especial cuando tu pequeña brilla con estilo. Este turbante suave con su flor de pétalos acanalados y centro celeste no es solo un accesorio: es ese toque de ternura que hace que cada momento sea fotografiable. Confeccionado con amor para cuidar la cabecita más preciosa de tu hogar.",
+    "disponible": true,
+    "fecha": "2026-05-23T05:25:04.146Z"
+  },
+  {
     "id": 10,
     "nombre": "Diadema Moño Iridiscente Rosa Chicle con Mariposa de Lentejuelas",
     "imagen": "/images/products/10_1779513279856.jpg",

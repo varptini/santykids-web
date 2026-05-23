@@ -1,5 +1,13 @@
 [
   {
+    "id": 9,
+    "nombre": "Moño Jumbo Multicapa Iridiscente",
+    "imagen": "/images/products/9_1779511233581.jpg",
+    "caption": "✨ Un arcoíris de alegría en el cabello de tu princesa 👑 Este moño jumbo es puro brillo, texturas mágicas y detalles que enamoran: lentejuelas iridiscentes, corazones acolchados dorados, tachuelas brillantes y ese estampado de personajes que hacen sonreír. Cada mirada será especial cuando luzca este accesorio hecho con amor.",
+    "disponible": true,
+    "fecha": "2026-05-23T04:40:35.497Z"
+  },
+  {
     "id": 8,
     "tipo": "de moño:** Moño de lazo doble y grande con colas largas",
     "color": "principal:** Púrpura y rosa",

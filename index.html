@@ -314,6 +314,77 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(0,0,0,.72);
+      align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 24px;
+      max-width: 520px; width: 100%;
+      max-height: 92vh; overflow-y: auto;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+      animation: modalIn .25s ease;
+      position: relative;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(24px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-close {
+      position: absolute; top: 14px; right: 16px;
+      background: rgba(0,0,0,.12); border: none; cursor: pointer;
+      width: 32px; height: 32px; border-radius: 50%;
+      font-size: 1.1rem; display: flex; align-items: center;
+      justify-content: center; color: var(--texto);
+      transition: background .2s; z-index: 2;
+    }
+    .modal-close:hover { background: rgba(0,0,0,.22); }
+    .modal-img {
+      width: 100%; aspect-ratio: 1/1; object-fit: cover;
+      border-radius: 24px 24px 0 0;
+      display: block;
+    }
+    .modal-body {
+      padding: 1.4rem 1.6rem 1.8rem;
+    }
+    .modal-nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; margin-bottom: .3rem;
+      text-transform: capitalize;
+    }
+    .modal-badge-agotado {
+      display: inline-block;
+      background: rgba(60,60,60,.15); color: var(--gris);
+      font-size: .72rem; font-weight: 700; letter-spacing: .05em;
+      padding: .2rem .7rem; border-radius: 50px;
+      text-transform: uppercase; margin-bottom: .8rem;
+    }
+    .modal-caption {
+      font-size: .9rem; line-height: 1.75;
+      color: var(--texto); font-weight: 300;
+      white-space: pre-line; margin-bottom: 1.4rem;
+    }
+    .modal-btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: #25D366; color: #fff;
+      padding: .7rem 1.4rem; border-radius: 50px;
+      font-size: .9rem; font-weight: 600;
+      text-decoration: none; transition: box-shadow .2s;
+    }
+    .modal-btn:hover { box-shadow: 0 6px 20px rgba(37,211,102,.4); }
+    .modal-btn-agotado {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--perla); color: var(--gris);
+      padding: .7rem 1.4rem; border-radius: 50px;
+      font-size: .9rem; font-weight: 500;
+      border: 1px solid rgba(0,0,0,.1);
+    }
+    .cat-card { cursor: pointer; }
+
     /* ── FOOTER ── */
     footer {
       background: var(--texto); color: rgba(255,255,255,.7);
@@ -370,7 +441,7 @@
       <a href="https://wa.me/5217447501386?text=Hola!%20Vi%20su%20página%20y%20me%20interesan%20sus%20moños%20🎀" class="btn btn-primary" target="_blank">
         Pedir por WhatsApp
       </a>
-      <a href="#productos" class="btn btn-secondary">Ver catálogo</a>
+      <a href="#catalogo" class="btn btn-secondary">Ver catálogo</a>
     </div>
     <div class="hero-visual">
       <div class="bow-circle">🎀</div>
@@ -554,6 +625,20 @@
   <p style="margin-top:.4rem; font-size:.8rem;">admin@santykids.com · santykids.com</p>
 </footer>
 
+<!-- Modal de producto -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+    <img class="modal-img" id="modalImg" src="" alt="" />
+    <div class="modal-body">
+      <div class="modal-nombre" id="modalNombre"></div>
+      <div id="modalBadge"></div>
+      <div class="modal-caption" id="modalCaption"></div>
+      <div id="modalBtn"></div>
+    </div>
+  </div>
+</div>
+
 <!-- WhatsApp flotante -->
 <a href="https://wa.me/5217447501386?text=Hola!%20Vi%20tu%20página%20y%20me%20interesan%20sus%20moños%20🎀"
    class="wa-float" target="_blank" title="Escríbenos por WhatsApp">
@@ -562,39 +647,79 @@
 
 <script>
 (function () {
-  const grid = document.getElementById('catalogoGrid');
+  const grid      = document.getElementById('catalogoGrid');
+  const overlay   = document.getElementById('modalOverlay');
+  const modalImg  = document.getElementById('modalImg');
+  const modalNom  = document.getElementById('modalNombre');
+  const modalBadge= document.getElementById('modalBadge');
+  const modalCap  = document.getElementById('modalCaption');
+  const modalBtn  = document.getElementById('modalBtn');
+  const btnClose  = document.getElementById('modalClose');
   const WA = 'https://wa.me/5217447501386';
 
-  function waLink(tipo, color) {
-    const txt = encodeURIComponent(`Hola! Vi su página y me interesa el ${tipo} ${color} 🎀`);
+  function waLink(nombre) {
+    const txt = encodeURIComponent(`Hola! Vi su página y me interesa: ${nombre} 🎀`);
     return `${WA}?text=${txt}`;
   }
+
+  function openModal(p) {
+    const agotado = p.disponible === false;
+    const nombre  = p.nombre || `${p.tipo || ''} ${p.color || ''}`.trim() || 'Producto';
+
+    modalImg.src = p.imagen;
+    modalImg.alt = nombre;
+    modalNom.textContent = nombre;
+    modalBadge.innerHTML = agotado ? '<div class="modal-badge-agotado">Agotado</div>' : '';
+    modalCap.textContent = p.caption || '';
+    modalBtn.innerHTML = agotado
+      ? '<span class="modal-btn-agotado">😔 Sin stock por ahora</span>'
+      : `<a class="modal-btn" href="${waLink(nombre)}" target="_blank">💬 Pedir este producto</a>`;
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  btnClose.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   function renderCards(products) {
     if (!products.length) {
       grid.innerHTML = '<div class="catalogo-empty">Próximamente nuestros productos aquí. ¡Síguenos en redes! 🎀</div>';
       return;
     }
-    grid.innerHTML = products.map(p => {
+    grid.innerHTML = products.map((p, i) => {
       const agotado = p.disponible === false;
-      const badge = agotado ? '<div class="badge-agotado">Agotado</div>' : '';
-      const btn = agotado
+      const nombre  = p.nombre || `${p.tipo || ''} ${p.color || ''}`.trim();
+      const badge   = agotado ? '<div class="badge-agotado">Agotado</div>' : '';
+      const btn     = agotado
         ? '<span class="cat-btn-agotado">😔 Sin stock por ahora</span>'
-        : `<a class="cat-btn" href="${waLink(p.tipo, p.color)}" target="_blank">💬 Pedir este moño</a>`;
+        : '<span class="cat-btn">💬 Pedir este producto</span>';
       return `
-        <div class="cat-card${agotado ? ' agotado' : ''}">
+        <div class="cat-card${agotado ? ' agotado' : ''}" data-idx="${i}">
           ${badge}
           <div class="cat-img-wrap">
-            <img src="${p.imagen}" alt="${p.tipo} ${p.color}" loading="lazy" />
+            <img src="${p.imagen}" alt="${nombre}" loading="lazy" />
           </div>
           <div class="cat-info">
-            <div class="cat-tipo">${p.nombre || `${p.tipo || ''} ${p.color || ''}`.trim()}</div>
-            <div class="cat-meta">${p.material || ''}</div>
+            <div class="cat-tipo">${nombre}</div>
             <div class="cat-caption">${p.caption}</div>
             ${btn}
           </div>
         </div>`;
     }).join('');
+
+    // Abrir modal al hacer click en cualquier parte de la card
+    grid.querySelectorAll('.cat-card').forEach(card => {
+      card.addEventListener('click', () => {
+        openModal(products[Number(card.dataset.idx)]);
+      });
+    });
   }
 
   fetch('/catalog.json')

@@ -385,6 +385,32 @@
     }
     .cat-card { cursor: pointer; }
 
+    /* ── FILTROS / PRECIO / GALERÍA ── */
+    .filtros {
+      max-width: 1200px; margin: 0 auto 1.6rem;
+      display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
+    }
+    .filtros input {
+      flex: 1 1 220px; padding: .65rem 1.1rem;
+      border: 1px solid var(--rosa); border-radius: 50px;
+      font: inherit; font-size: .9rem; outline: none;
+    }
+    .filtros input:focus { border-color: var(--rosa-dark); }
+    .chip {
+      border: 1px solid var(--rosa-dark); background: #fff; color: var(--rosa-dark);
+      padding: .45rem 1rem; border-radius: 50px; cursor: pointer;
+      font: inherit; font-size: .82rem; text-transform: capitalize;
+    }
+    .chip.on { background: var(--rosa-dark); color: #fff; }
+    .cat-precio { color: var(--rosa-dark); font-weight: 600; font-size: .95rem; margin-bottom: .5rem; }
+    .modal-precio { color: var(--rosa-dark); font-weight: 600; margin-bottom: .6rem; }
+    .thumbs { display: flex; gap: .5rem; padding: .6rem 1.6rem 0; flex-wrap: wrap; }
+    .thumbs img {
+      width: 56px; height: 56px; object-fit: cover; border-radius: 10px;
+      cursor: pointer; border: 2px solid transparent;
+    }
+    .thumbs img.on { border-color: var(--rosa-dark); }
+
     /* ── FOOTER ── */
     footer {
       background: var(--texto); color: rgba(255,255,255,.7);
@@ -496,6 +522,10 @@
     <h2>Catálogo de Moños</h2>
     <p>Nuestros productos más recientes — haz clic para pedir el tuyo</p>
     <div class="divider"></div>
+  </div>
+  <div class="filtros" id="filtros">
+    <input id="buscar" type="search" placeholder="Buscar moños, diademas..." aria-label="Buscar" />
+    <span id="chips"></span>
   </div>
   <div class="catalogo-grid" id="catalogoGrid">
     <div class="catalogo-loading">
@@ -630,8 +660,10 @@
   <div class="modal-box">
     <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
     <img class="modal-img" id="modalImg" src="" alt="" />
+    <div class="thumbs" id="modalThumbs"></div>
     <div class="modal-body">
       <div class="modal-nombre" id="modalNombre"></div>
+      <div class="modal-precio" id="modalPrecio"></div>
       <div id="modalBadge"></div>
       <div class="modal-caption" id="modalCaption"></div>
       <div id="modalBtn"></div>
@@ -647,34 +679,41 @@
 
 <script>
 (function () {
-  const grid      = document.getElementById('catalogoGrid');
-  const overlay   = document.getElementById('modalOverlay');
-  const modalImg  = document.getElementById('modalImg');
-  const modalNom  = document.getElementById('modalNombre');
-  const modalBadge= document.getElementById('modalBadge');
-  const modalCap  = document.getElementById('modalCaption');
-  const modalBtn  = document.getElementById('modalBtn');
-  const btnClose  = document.getElementById('modalClose');
+  const SUPABASE_URL = 'https://piaxnqcafqkilwjxwwdm.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_DN68M-5ySj8UhPymSQ4U7A_iIjv65bR'; // llave pública: solo lee productos publicados (RLS)
   const WA = 'https://wa.me/5217447501386';
 
-  function waLink(nombre) {
-    const txt = encodeURIComponent(`Hola! Vi su página y me interesa: ${nombre} 🎀`);
-    return `${WA}?text=${txt}`;
-  }
+  const $ = id => document.getElementById(id);
+  const grid = $('catalogoGrid'), overlay = $('modalOverlay'), modalImg = $('modalImg');
+  const modalNom = $('modalNombre'), modalBadge = $('modalBadge'), modalCap = $('modalCaption');
+  const modalBtn = $('modalBtn'), modalPrecio = $('modalPrecio'), thumbs = $('modalThumbs');
+  const buscar = $('buscar'), chips = $('chips');
+
+  let products = [], categoria = null;
+
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const precio = p => (p.precio === null || p.precio === undefined) ? '' : `$${Number(p.precio)} MXN`;
+  const waLink = nombre => `${WA}?text=${encodeURIComponent(`Hola! Vi su página y me interesa: ${nombre} 🎀`)}`;
 
   function openModal(p) {
-    const agotado = p.disponible === false;
-    const nombre  = p.nombre || `${p.tipo || ''} ${p.color || ''}`.trim() || 'Producto';
-
-    modalImg.src = p.imagen;
-    modalImg.alt = nombre;
-    modalNom.textContent = nombre;
+    const agotado = p.stock === 0;
+    const show = i => {
+      modalImg.src = p.imagenes[i];
+      thumbs.querySelectorAll('img').forEach((t, k) => t.classList.toggle('on', k === i));
+    };
+    modalImg.alt = p.nombre;
+    modalNom.textContent = p.nombre;
+    modalPrecio.textContent = precio(p);
     modalBadge.innerHTML = agotado ? '<div class="modal-badge-agotado">Agotado</div>' : '';
-    modalCap.textContent = p.caption || '';
+    modalCap.textContent = p.descripcion || '';
     modalBtn.innerHTML = agotado
       ? '<span class="modal-btn-agotado">😔 Sin stock por ahora</span>'
-      : `<a class="modal-btn" href="${waLink(nombre)}" target="_blank">💬 Pedir este producto</a>`;
-
+      : `<a class="modal-btn" href="${waLink(p.nombre)}" target="_blank" rel="noopener">💬 Pedir este producto</a>`;
+    thumbs.innerHTML = p.imagenes.length > 1
+      ? p.imagenes.map(u => `<img src="${esc(u)}" alt="" />`).join('') : '';
+    thumbs.querySelectorAll('img').forEach((t, k) => t.addEventListener('click', () => show(k)));
+    show(0);
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -683,49 +722,55 @@
     overlay.classList.remove('open');
     document.body.style.overflow = '';
   }
-
-  btnClose.addEventListener('click', closeModal);
+  $('modalClose').addEventListener('click', closeModal);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  function renderCards(products) {
-    if (!products.length) {
-      grid.innerHTML = '<div class="catalogo-empty">Próximamente nuestros productos aquí. ¡Síguenos en redes! 🎀</div>';
+  function renderChips() {
+    const cats = [...new Set(products.map(p => p.categoria).filter(Boolean))].sort();
+    chips.innerHTML = cats.map(c => `<button class="chip${c === categoria ? ' on' : ''}" data-c="${esc(c)}">${esc(c)}</button>`).join(' ');
+    chips.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+      categoria = categoria === b.dataset.c ? null : b.dataset.c;
+      renderChips(); render();
+    }));
+  }
+
+  function render() {
+    const q = norm(buscar.value.trim());
+    const shown = products.filter(p =>
+      (!categoria || p.categoria === categoria) &&
+      (!q || norm(`${p.nombre} ${p.descripcion}`).includes(q)));
+    if (!shown.length) {
+      grid.innerHTML = '<div class="catalogo-empty">' + (products.length
+        ? 'No encontramos productos con ese filtro.'
+        : 'Próximamente nuestros productos aquí. ¡Síguenos en redes! 🎀') + '</div>';
       return;
     }
-    grid.innerHTML = products.map((p, i) => {
-      const agotado = p.disponible === false;
-      const nombre  = p.nombre || `${p.tipo || ''} ${p.color || ''}`.trim();
-      const badge   = agotado ? '<div class="badge-agotado">Agotado</div>' : '';
-      const btn     = agotado
-        ? '<span class="cat-btn-agotado">😔 Sin stock por ahora</span>'
-        : '<span class="cat-btn">💬 Pedir este producto</span>';
+    grid.innerHTML = shown.map((p, i) => {
+      const agotado = p.stock === 0;
       return `
         <div class="cat-card${agotado ? ' agotado' : ''}" data-idx="${i}">
-          ${badge}
-          <div class="cat-img-wrap">
-            <img src="${p.imagen}" alt="${nombre}" loading="lazy" />
-          </div>
+          ${agotado ? '<div class="badge-agotado">Agotado</div>' : ''}
+          <div class="cat-img-wrap"><img src="${esc(p.imagenes[0])}" alt="${esc(p.nombre)}" loading="lazy" /></div>
           <div class="cat-info">
-            <div class="cat-tipo">${nombre}</div>
-            <div class="cat-caption">${p.caption}</div>
-            ${btn}
+            <div class="cat-tipo">${esc(p.nombre)}</div>
+            ${precio(p) ? `<div class="cat-precio">${esc(precio(p))}</div>` : ''}
+            <div class="cat-caption">${esc(p.descripcion)}</div>
+            ${agotado ? '<span class="cat-btn-agotado">😔 Sin stock por ahora</span>' : '<span class="cat-btn">💬 Pedir este producto</span>'}
           </div>
         </div>`;
     }).join('');
-
-    // Abrir modal al hacer click en cualquier parte de la card
-    grid.querySelectorAll('.cat-card').forEach(card => {
-      card.addEventListener('click', () => {
-        openModal(products[Number(card.dataset.idx)]);
-      });
-    });
+    grid.querySelectorAll('.cat-card').forEach(card =>
+      card.addEventListener('click', () => openModal(shown[Number(card.dataset.idx)])));
   }
 
-  fetch('/catalog.json')
+  buscar.addEventListener('input', render);
+
+  fetch(`${SUPABASE_URL}/rest/v1/products?select=*&estado=eq.publicado&order=created_at.desc`,
+        { headers: { apikey: SUPABASE_KEY } })
     .then(r => r.ok ? r.json() : [])
-    .then(renderCards)
-    .catch(() => renderCards([]));
+    .catch(() => [])
+    .then(data => { products = data.filter(p => p.imagenes && p.imagenes.length); renderChips(); render(); });
 })();
 </script>
 

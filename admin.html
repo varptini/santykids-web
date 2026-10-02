@@ -27,6 +27,12 @@
 
     .admin-header { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 0; }
     .admin-header h1 { font-size: 1.3rem; }
+
+    #listMsg:empty { display: none; }
+    #listMsg { color: var(--rosa-700); }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: .92rem; margin-bottom: 1.5rem; }
+    .admin-table th, .admin-table td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--rosa-200); }
+    .admin-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; display: block; background: var(--rosa-200); }
   </style>
 </head>
 <body class="admin-body">
@@ -58,6 +64,7 @@
       <h1>Santy<span style="color:var(--rosa-700)">Kids</span> · Panel</h1>
       <button type="button" id="logoutBtn" class="btn btn-ghost">Cerrar sesión</button>
     </div>
+    <p id="listMsg" class="count" aria-live="polite"></p>
     <div id="productList"></div>
     <div id="productForm" hidden></div>
   </div>

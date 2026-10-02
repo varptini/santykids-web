@@ -41,6 +41,15 @@
     #formMsg { color: var(--rosa-700); }
     .form-actions { display: flex; gap: .75rem; margin-top: 1.2rem; }
     .form-actions .btn { flex: 1; }
+
+    #fImagePreview { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .6rem; }
+    .img-preview-item { position: relative; width: 72px; height: 72px; }
+    .img-preview-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px;
+                             border: 2px solid var(--rosa-200); display: block; }
+    .img-preview-item .img-remove { position: absolute; top: -8px; right: -8px; width: 22px; height: 22px;
+                                     border-radius: 50%; border: none; background: var(--rosa-700); color: #fff;
+                                     font: 700 .9rem/1 var(--body); cursor: pointer; display: flex;
+                                     align-items: center; justify-content: center; padding: 0; }
   </style>
 </head>
 <body class="admin-body">
@@ -112,6 +121,11 @@
             <option value="publicado">Publicado</option>
             <option value="archivado">Archivado</option>
           </select>
+        </div>
+        <div class="field">
+          <label for="fImagenes">Fotos</label>
+          <input id="fImagenes" type="file" accept="image/*" multiple />
+          <div id="fImagePreview"></div>
         </div>
         <p id="formMsg" aria-live="polite"></p>
         <div class="form-actions">

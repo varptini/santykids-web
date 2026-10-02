@@ -25,12 +25,15 @@ const fCategoria = $('fCategoria');
 const fStock = $('fStock');
 const fEstado = $('fEstado');
 const categoriaList = $('categoriaList');
+const fImagenes = $('fImagenes');
+const fImagePreview = $('fImagePreview');
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const precio = p => (p.precio === null || p.precio === undefined) ? '' : `$${Number(p.precio)} MXN`;
 
 let products = [];
 let editingId = null;
+let formImages = [];
 
 function showGate() {
   authGate.hidden = false;
@@ -126,6 +129,8 @@ function openForm(product) {
   fCategoria.value = product ? (product.categoria ?? '') : '';
   fStock.value = product && product.stock !== null && product.stock !== undefined ? product.stock : '';
   fEstado.value = product ? (product.estado ?? 'borrador') : 'borrador';
+  formImages = (product?.imagenes || []).map(url => ({ path: null, url }));
+  renderImagePreview();
   productForm.hidden = false;
   productList.hidden = true;
 }
@@ -142,9 +147,51 @@ function populateCategoriaList() {
   categoriaList.innerHTML = cats.map(c => `<option value="${esc(c)}"></option>`).join('');
 }
 
+function sanitizeFilename(name) {
+  return name.toLowerCase().replace(/[^a-z0-9._-]/g, '_');
+}
+
+async function handleFileSelect(fileList) {
+  for (const file of fileList) {
+    if (!file.type.startsWith('image/')) {
+      formMsg.textContent += `${formMsg.textContent ? ' ' : ''}${file.name}: no es una imagen`;
+      continue;
+    }
+    const path = `${Date.now()}_${sanitizeFilename(file.name)}`;
+    const { error } = await sb.storage.from('products').upload(path, file);
+    if (error) {
+      formMsg.textContent += `${formMsg.textContent ? ' ' : ''}${file.name}: ${error.message}`;
+      continue;
+    }
+    const { data } = sb.storage.from('products').getPublicUrl(path);
+    formImages.push({ path, url: data.publicUrl });
+    renderImagePreview();
+  }
+}
+
+function renderImagePreview() {
+  if (!fImagePreview) return;
+  fImagePreview.innerHTML = formImages.map((img, i) => `
+    <div class="img-preview-item">
+      <img src="${esc(img.url)}" alt="" />
+      <button type="button" class="img-remove" data-index="${i}" aria-label="Quitar imagen">×</button>
+    </div>`).join('');
+  fImagePreview.querySelectorAll('.img-remove').forEach(btn => {
+    btn.addEventListener('click', () => removeImage(Number(btn.dataset.index)));
+  });
+}
+
+function removeImage(index) {
+  formImages.splice(index, 1);
+  renderImagePreview();
+}
+
 async function saveProduct(e) {
   e.preventDefault();
   formMsg.textContent = '';
+  if (formImages.length === 0) {
+    formMsg.textContent = 'Sin fotos, este producto no va a aparecer en el catálogo público aunque esté publicado';
+  }
   const payload = {
     nombre: fNombre.value,
     descripcion: fDescripcion.value,
@@ -153,6 +200,7 @@ async function saveProduct(e) {
     categoria: fCategoria.value,
     stock: Number(fStock.value),
     estado: fEstado.value,
+    imagenes: formImages.map(i => i.url),
   };
   const { error } = editingId
     ? await sb.from('products').update(payload).eq('id', editingId)
@@ -175,6 +223,7 @@ logoutBtn.addEventListener('click', logout);
 newProductBtn.addEventListener('click', () => openForm(null));
 formCancelBtn.addEventListener('click', closeForm);
 productFormEl.addEventListener('submit', saveProduct);
+fImagenes.addEventListener('change', e => handleFileSelect(e.target.files));
 
 sb.auth.getSession().then(({ data }) => onAuthReady(data.session));
 sb.auth.onAuthStateChange((_event, session) => onAuthReady(session));

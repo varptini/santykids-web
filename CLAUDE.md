@@ -32,3 +32,6 @@ branch are what goes live.
 - `index.html` — markup + inline JS (`fetch('/catalog.json')` around line 725) + inline styles, all in one file.
 - `catalog.json` — array of products (`id`, `nombre`, `imagen`, `caption`, ...), synced from the bot.
 - `images/products/` — product images, filenames referenced by `catalog.json.imagen`.
+- `catalogo.html` — full catalog grid (filters, search, gallery modal), split out of `index.html`; the home only shows a "destacados" carousel.
+- `styles.css`, `catalogo.js` — shared between `index.html` and `catalogo.html`: `catalogo.js` queries Supabase (`estado='publicado'`) and renders both the home carousel and the full grid.
+- `admin.html`, `admin.js` — login-gated product management panel (Supabase Auth + CRUD on `products`, including photo upload to Supabase Storage); not linked from the public nav.

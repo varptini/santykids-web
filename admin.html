@@ -18,9 +18,10 @@
     .login-card p.sub { color: var(--gris); font-size: .92rem; margin-bottom: 1.4rem; }
     .field { margin-bottom: 1rem; }
     .field label { display: block; font-weight: 700; font-size: .88rem; margin-bottom: .35rem; }
-    .field input { width: 100%; min-height: 48px; padding: .6rem 1rem; border: 2px solid var(--rosa-200);
+    .field input, .field textarea, .field select { width: 100%; min-height: 48px; padding: .6rem 1rem; border: 2px solid var(--rosa-200);
                    border-radius: 12px; font: 500 1rem var(--body); color: var(--texto); background: var(--surface); }
-    .field input:focus { border-color: var(--rosa-700); outline: none; box-shadow: 0 0 0 3px rgba(190,24,93,.18); }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--rosa-700); outline: none; box-shadow: 0 0 0 3px rgba(190,24,93,.18); }
     .login-card .btn { width: 100%; margin-top: .4rem; }
     #loginError:empty { display: none; }
     #loginError { color: var(--rosa-700); text-align: left; }
@@ -33,6 +34,13 @@
     .admin-table { width: 100%; border-collapse: collapse; font-size: .92rem; margin-bottom: 1.5rem; }
     .admin-table th, .admin-table td { text-align: left; padding: .6rem .5rem; border-bottom: 1px solid var(--rosa-200); }
     .admin-thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; display: block; background: var(--rosa-200); }
+
+    .admin-list-header { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+    #productForm { max-width: 480px; }
+    #formMsg:empty { display: none; }
+    #formMsg { color: var(--rosa-700); }
+    .form-actions { display: flex; gap: .75rem; margin-top: 1.2rem; }
+    .form-actions .btn { flex: 1; }
   </style>
 </head>
 <body class="admin-body">
@@ -64,9 +72,54 @@
       <h1>Santy<span style="color:var(--rosa-700)">Kids</span> · Panel</h1>
       <button type="button" id="logoutBtn" class="btn btn-ghost">Cerrar sesión</button>
     </div>
+    <div class="admin-list-header">
+      <button type="button" id="newProductBtn" class="btn btn-primary">+ Nuevo producto</button>
+    </div>
     <p id="listMsg" class="count" aria-live="polite"></p>
     <div id="productList"></div>
-    <div id="productForm" hidden></div>
+
+    <div id="productForm" hidden>
+      <form id="productFormEl" novalidate>
+        <div class="field">
+          <label for="fNombre">Nombre</label>
+          <input id="fNombre" type="text" required />
+        </div>
+        <div class="field">
+          <label for="fDescripcion">Descripción</label>
+          <textarea id="fDescripcion" rows="3"></textarea>
+        </div>
+        <div class="field">
+          <label for="fHashtags">Hashtags</label>
+          <input id="fHashtags" type="text" />
+        </div>
+        <div class="field">
+          <label for="fPrecio">Precio</label>
+          <input id="fPrecio" type="number" step="0.01" />
+        </div>
+        <div class="field">
+          <label for="fCategoria">Categoría</label>
+          <input id="fCategoria" type="text" list="categoriaList" />
+          <datalist id="categoriaList"></datalist>
+        </div>
+        <div class="field">
+          <label for="fStock">Stock</label>
+          <input id="fStock" type="number" step="1" />
+        </div>
+        <div class="field">
+          <label for="fEstado">Estado</label>
+          <select id="fEstado">
+            <option value="borrador">Borrador</option>
+            <option value="publicado">Publicado</option>
+            <option value="archivado">Archivado</option>
+          </select>
+        </div>
+        <p id="formMsg" aria-live="polite"></p>
+        <div class="form-actions">
+          <button type="submit" id="formSaveBtn" class="btn btn-primary">Guardar</button>
+          <button type="button" id="formCancelBtn" class="btn btn-ghost">Cancelar</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

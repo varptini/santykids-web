@@ -12,11 +12,25 @@ const loginError = $('loginError');
 const logoutBtn = $('logoutBtn');
 const productList = $('productList');
 const listMsg = $('listMsg');
+const newProductBtn = $('newProductBtn');
+const productForm = $('productForm');
+const productFormEl = $('productFormEl');
+const formMsg = $('formMsg');
+const formCancelBtn = $('formCancelBtn');
+const fNombre = $('fNombre');
+const fDescripcion = $('fDescripcion');
+const fHashtags = $('fHashtags');
+const fPrecio = $('fPrecio');
+const fCategoria = $('fCategoria');
+const fStock = $('fStock');
+const fEstado = $('fEstado');
+const categoriaList = $('categoriaList');
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const precio = p => (p.precio === null || p.precio === undefined) ? '' : `$${Number(p.precio)} MXN`;
 
 let products = [];
+let editingId = null;
 
 function showGate() {
   authGate.hidden = false;
@@ -67,6 +81,7 @@ async function loadProducts() {
 function renderProductList(list) {
   if (!list.length) {
     productList.innerHTML = '<p class="count">No hay productos todavía.</p>';
+    populateCategoriaList();
     return;
   }
   productList.innerHTML = `
@@ -95,6 +110,59 @@ function renderProductList(list) {
         }).join('')}
       </tbody>
     </table>`;
+  productList.querySelectorAll('.js-edit').forEach(btn => {
+    btn.addEventListener('click', () => openForm(products.find(p => p.id === Number(btn.dataset.id))));
+  });
+  populateCategoriaList();
+}
+
+function openForm(product) {
+  editingId = product ? product.id : null;
+  formMsg.textContent = '';
+  fNombre.value = product ? (product.nombre ?? '') : '';
+  fDescripcion.value = product ? (product.descripcion ?? '') : '';
+  fHashtags.value = product ? (product.hashtags ?? '') : '';
+  fPrecio.value = product && product.precio !== null && product.precio !== undefined ? product.precio : '';
+  fCategoria.value = product ? (product.categoria ?? '') : '';
+  fStock.value = product && product.stock !== null && product.stock !== undefined ? product.stock : '';
+  fEstado.value = product ? (product.estado ?? 'borrador') : 'borrador';
+  productForm.hidden = false;
+  productList.hidden = true;
+}
+
+function closeForm() {
+  editingId = null;
+  productForm.hidden = true;
+  productList.hidden = false;
+}
+
+function populateCategoriaList() {
+  if (!categoriaList) return;
+  const cats = [...new Set(products.map(p => p.categoria).filter(Boolean))].sort();
+  categoriaList.innerHTML = cats.map(c => `<option value="${esc(c)}"></option>`).join('');
+}
+
+async function saveProduct(e) {
+  e.preventDefault();
+  formMsg.textContent = '';
+  const payload = {
+    nombre: fNombre.value,
+    descripcion: fDescripcion.value,
+    hashtags: fHashtags.value,
+    precio: Number(fPrecio.value) || null,
+    categoria: fCategoria.value,
+    stock: Number(fStock.value),
+    estado: fEstado.value,
+  };
+  const { error } = editingId
+    ? await sb.from('products').update(payload).eq('id', editingId)
+    : await sb.from('products').insert(payload);
+  if (error) {
+    formMsg.textContent = error.message;
+    return;
+  }
+  await loadProducts();
+  closeForm();
 }
 
 loginForm.addEventListener('submit', e => {
@@ -103,6 +171,10 @@ loginForm.addEventListener('submit', e => {
 });
 
 logoutBtn.addEventListener('click', logout);
+
+newProductBtn.addEventListener('click', () => openForm(null));
+formCancelBtn.addEventListener('click', closeForm);
+productFormEl.addEventListener('submit', saveProduct);
 
 sb.auth.getSession().then(({ data }) => onAuthReady(data.session));
 sb.auth.onAuthStateChange((_event, session) => onAuthReady(session));

@@ -108,13 +108,19 @@ function renderProductList(list) {
               <td>${esc(precio(p))}</td>
               <td>${esc(p.stock)}</td>
               <td>${esc(p.estado)}</td>
-              <td><button type="button" class="btn btn-ghost js-edit" data-id="${esc(p.id)}">Editar</button></td>
+              <td>
+                <button type="button" class="btn btn-ghost js-edit" data-id="${esc(p.id)}">Editar</button>
+                ${p.estado !== 'archivado' ? `<button type="button" class="btn btn-ghost js-archive" data-id="${esc(p.id)}">Archivar</button>` : ''}
+              </td>
             </tr>`;
         }).join('')}
       </tbody>
     </table>`;
   productList.querySelectorAll('.js-edit').forEach(btn => {
     btn.addEventListener('click', () => openForm(products.find(p => p.id === Number(btn.dataset.id))));
+  });
+  productList.querySelectorAll('.js-archive').forEach(btn => {
+    btn.addEventListener('click', () => archiveProduct(Number(btn.dataset.id)));
   });
   populateCategoriaList();
 }
@@ -184,6 +190,16 @@ function renderImagePreview() {
 function removeImage(index) {
   formImages.splice(index, 1);
   renderImagePreview();
+}
+
+async function archiveProduct(id) {
+  if (!confirm('¿Archivar este producto? Dejará de verse en el catálogo público.')) return;
+  const { error } = await sb.from('products').update({ estado: 'archivado' }).eq('id', id);
+  if (error) {
+    listMsg.textContent = error.message;
+    return;
+  }
+  await loadProducts();
 }
 
 async function saveProduct(e) {

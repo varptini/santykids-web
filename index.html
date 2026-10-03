@@ -3,730 +3,303 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Santy Kids — Accesorios y Ropa para Bebés y Niños</title>
-  <meta name="description" content="Moños artesanales, ropa y accesorios para bebés y niños. Diseños únicos hechos a mano. Envíos a todo México." />
-  <meta property="og:title" content="Santy Kids — Moños Artesanales" />
-  <meta property="og:description" content="Accesorios de tela hechos con amor para tu cabello." />
+  <title>Santy Kids — Moños y accesorios hechos a mano para bebés y niñas</title>
+  <meta name="description" content="Moños artesanales, diademas y accesorios para bebés y niños. Diseños únicos hechos a mano. Envíos a todo México." />
+  <meta name="theme-color" content="#FDF2F8" />
+  <meta property="og:title" content="Santy Kids — Moños artesanales" />
+  <meta property="og:description" content="Accesorios hechos con amor para tus pequeños." />
   <meta property="og:image" content="https://santykids.com/preview.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --rosa:      #f2a7c3;
-      --rosa-dark: #d4799a;
-      --perla:     #fdf6f0;
-      --champagne: #f7e7ce;
-      --texto:     #3a2d35;
-      --gris:      #7a6a72;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: var(--texto);
-      background: #fff;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; width: 100%; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2rem;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(242,167,195,0.2);
-    }
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
-      color: var(--rosa-dark);
-      text-decoration: none;
-    }
-    .logo span { color: var(--texto); }
-    nav ul { list-style: none; display: flex; gap: 2rem; }
-    nav ul a {
-      text-decoration: none; color: var(--texto);
-      font-size: 0.9rem; font-weight: 500;
-      transition: color .2s;
-    }
-    nav ul a:hover { color: var(--rosa-dark); }
-
     /* ── HERO ── */
-    .hero {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #fdf0f7 0%, var(--champagne) 50%, #fdf6f0 100%);
-      display: flex; align-items: center;
-      padding: 6rem 2rem 4rem;
-    }
-    .hero-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-    }
-    .hero-text h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 5vw, 3.8rem);
-      line-height: 1.15;
-      margin-bottom: 1.2rem;
-    }
-    .hero-text h1 em {
-      font-style: normal;
-      color: var(--rosa-dark);
-    }
-    .hero-text p {
-      font-size: 1.05rem; color: var(--gris);
-      line-height: 1.8; margin-bottom: 2rem;
-      font-weight: 300;
-    }
-    .btn {
-      display: inline-block;
-      padding: .85rem 2.2rem;
-      border-radius: 50px;
-      font-weight: 600; font-size: .95rem;
-      text-decoration: none;
-      transition: transform .2s, box-shadow .2s;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,121,154,.35); }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--rosa), var(--rosa-dark));
-      color: #fff;
-    }
-    .btn-secondary {
-      background: transparent;
-      border: 2px solid var(--rosa-dark);
-      color: var(--rosa-dark);
-      margin-left: 1rem;
-    }
-    .btn-secondary:hover { box-shadow: none; background: var(--rosa-dark); color: #fff; }
+    .hero { padding: 3.5rem 0 4rem; background:
+              radial-gradient(60% 50% at 85% 10%, var(--lila-100) 0, transparent 70%),
+              radial-gradient(50% 50% at 5% 90%, var(--champagne) 0, transparent 70%), var(--bg); }
+    .hero-in { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: center; }
+    .hero h1 { font-size: clamp(2.3rem, 6vw, 3.9rem); margin-bottom: 1.1rem; }
+    .hero h1 em { font-style: normal; color: var(--rosa-700); }
+    .hero p.lead { font-size: 1.15rem; color: var(--gris); max-width: 34ch; margin-bottom: 1.8rem; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: .8rem; }
+    .hero-art { position: relative; justify-self: center; width: min(100%, 400px); }
+    .hero-frame { aspect-ratio: 4/5; border-radius: 200px 200px 28px 28px; overflow: hidden;
+                  background: linear-gradient(160deg, var(--rosa-200), var(--rosa-50));
+                  box-shadow: var(--shadow-hi); display: grid; place-items: center; }
+    .hero-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-frame svg { width: 60%; }
+    .hero-tag { position: absolute; left: -14px; bottom: 26px; background: var(--surface); border-radius: 16px;
+                padding: .6rem 1rem; box-shadow: var(--shadow-hi); font-weight: 700; display: none;
+                align-items: center; gap: .5rem; max-width: 80%; }
+    .hero-tag.on { display: flex; }
+    .hero-tag .ic { color: var(--rosa-700); }
 
-    .hero-visual {
-      display: flex; justify-content: center; align-items: center;
-    }
-    .bow-circle {
-      width: 380px; height: 380px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #fce4f0, #f9d5e8);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 9rem;
-      box-shadow: 0 20px 60px rgba(212,121,154,.25), inset 0 -10px 30px rgba(255,255,255,.6);
-      animation: float 4s ease-in-out infinite;
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-14px); }
-    }
+    /* ── TIRA DE CONFIANZA ── */
+    .trust { padding: 0; margin-top: -1.6rem; position: relative; z-index: 2; }
+    .trust-in { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: var(--surface);
+                border-radius: var(--radius); padding: 1.2rem 1.4rem; box-shadow: var(--shadow); }
+    .trust-item { display: flex; align-items: center; gap: .8rem; }
+    .trust-item .ic { width: 28px; height: 28px; color: var(--rosa-700); }
+    .trust-item strong { display: block; font-family: var(--display); font-weight: 600; }
+    .trust-item span { font-size: .88rem; color: var(--gris); }
 
-    /* ── SECCIÓN GENÉRICA ── */
-    section { padding: 5rem 2rem; }
-    .section-title {
-      text-align: center; margin-bottom: 3rem;
-    }
-    .section-title h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      margin-bottom: .5rem;
-    }
-    .section-title p { color: var(--gris); font-weight: 300; }
-    .divider {
-      width: 60px; height: 3px;
-      background: linear-gradient(90deg, var(--rosa), var(--rosa-dark));
-      border-radius: 2px; margin: .8rem auto 0;
-    }
+    /* ── DESTACADOS (carrusel horizontal en el home; la grilla completa vive en catalogo.html) ── */
+    .destacados-track { display: flex; gap: 1.2rem; overflow-x: auto; padding: .5rem .25rem 1.4rem;
+                         scroll-snap-type: x proximity; scrollbar-width: thin; }
+    .destacados-track .cat-card { flex: 0 0 220px; scroll-snap-align: start; }
+    .destacados-cta { text-align: center; margin-top: .5rem; }
 
-    /* ── PRODUCTOS ── */
-    .productos { background: var(--perla); }
-    .productos-grid {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.8rem;
-    }
-    .card {
-      background: #fff; border-radius: 20px;
-      padding: 2rem 1.5rem; text-align: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,.06);
-      transition: transform .3s, box-shadow .3s;
-    }
-    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(212,121,154,.18); }
-    .card-icon { font-size: 3.5rem; margin-bottom: 1rem; }
-    .card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem; margin-bottom: .5rem;
-    }
-    .card p { font-size: .9rem; color: var(--gris); line-height: 1.7; font-weight: 300; }
+    /* ── QUÉ HACEMOS / NOSOTROS ── */
+    .alt { background: var(--surface); }
+    .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.4rem; }
+    .info-card { background: var(--bg); border-radius: var(--radius); padding: 1.6rem; }
+    .alt .info-card { background: var(--bg); }
+    .info-card .icon-bubble { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center;
+                              background: var(--rosa-200); color: var(--rosa-700); margin-bottom: 1rem; }
+    .info-card:nth-child(3n+2) .icon-bubble { background: var(--lila-100); color: var(--lila-600); }
+    .info-card:nth-child(3n) .icon-bubble { background: var(--champagne); color: #92580A; }
+    .icon-bubble .ic { width: 26px; height: 26px; }
+    .info-card h3 { font-size: 1.2rem; margin-bottom: .4rem; }
+    .info-card p { color: var(--gris); font-size: .95rem; }
 
-    /* ── POR QUÉ NOSOTROS ── */
-    .features-grid {
-      max-width: 900px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;
-    }
-    .feature { text-align: center; }
-    .feature-icon {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: linear-gradient(135deg, #fce4f0, #f9d5e8);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem; margin: 0 auto 1rem;
-    }
-    .feature h3 { font-size: 1rem; margin-bottom: .3rem; }
-    .feature p { font-size: .85rem; color: var(--gris); font-weight: 300; line-height: 1.6; }
-
-    /* ── COLORES ── */
-    .colores { background: var(--perla); }
-    .paleta {
-      max-width: 700px; margin: 0 auto;
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem;
-    }
-    .color-chip {
-      display: flex; flex-direction: column; align-items: center; gap: .5rem;
-    }
-    .color-circle {
-      width: 72px; height: 72px; border-radius: 50%;
-      box-shadow: 0 4px 14px rgba(0,0,0,.12);
-    }
-    .color-chip span { font-size: .8rem; color: var(--gris); font-weight: 500; }
+    .paleta { display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: center; }
+    .swatch { display: flex; flex-direction: column; align-items: center; gap: .5rem; font-weight: 600; font-size: .9rem; }
+    .swatch i { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(74,29,58,.15), var(--shadow); }
 
     /* ── CTA ── */
-    .cta {
-      background: linear-gradient(135deg, var(--rosa-dark), #c0608a);
-      text-align: center; color: #fff;
-    }
-    .cta h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      margin-bottom: 1rem;
-    }
-    .cta p { font-weight: 300; margin-bottom: 2rem; opacity: .9; }
-    .btn-white {
-      background: #fff; color: var(--rosa-dark);
-      font-weight: 600;
-    }
-    .btn-white:hover { box-shadow: 0 8px 24px rgba(0,0,0,.2); }
-    .btn-wa {
-      background: #25D366; color: #fff;
-      margin-left: 1rem;
-    }
-    .btn-wa:hover { box-shadow: 0 8px 24px rgba(37,211,102,.4); }
+    .cta { background: linear-gradient(135deg, var(--rosa-700), #9D174D 60%, var(--lila-600)); color: #fff; text-align: center; }
+    .cta h2 { font-size: clamp(1.7rem, 4vw, 2.5rem); margin-bottom: .8rem; }
+    .cta p { opacity: .95; max-width: 48ch; margin: 0 auto 1.8rem; }
+    .cta .btn-light { background: #fff; color: var(--rosa-700); }
+    .cta .btn-light:hover { box-shadow: 0 10px 28px rgba(0,0,0,.25); }
 
     /* ── CONTACTO ── */
-    .contacto-inner {
-      max-width: 700px; margin: 0 auto; text-align: center;
-    }
-    .contacto-links {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; margin-top: 2rem;
-    }
-    .contacto-link {
-      display: flex; align-items: center; gap: .6rem;
-      background: var(--perla); border-radius: 50px;
-      padding: .7rem 1.4rem; text-decoration: none;
-      color: var(--texto); font-size: .9rem; font-weight: 500;
-      border: 1px solid rgba(212,121,154,.2);
-      transition: background .2s, border-color .2s;
-    }
-    .contacto-link:hover { background: #fce4f0; border-color: var(--rosa); }
-    .contacto-link .icon { font-size: 1.2rem; }
+    .contact-links { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; }
+    .contact-link { display: inline-flex; align-items: center; gap: .6rem; min-height: 48px; padding: .6rem 1.3rem;
+                    background: var(--surface); border: 2px solid var(--rosa-200); border-radius: 999px; text-decoration: none;
+                    font-weight: 700; transition: border-color .2s, transform .2s; }
+    .contact-link:hover { border-color: var(--rosa-700); transform: translateY(-2px); }
+    .contact-link .ic { color: var(--rosa-700); }
+    .address { display: flex; align-items: center; justify-content: center; gap: .5rem; margin-top: 1.8rem; color: var(--gris); }
 
-    /* ── CATÁLOGO ── */
-    .catalogo { background: #fff; }
-    .catalogo-grid {
-      max-width: 1200px; margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.8rem;
-    }
-    .cat-card {
-      background: #fff; border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,.07);
-      transition: transform .3s, box-shadow .3s;
-      display: flex; flex-direction: column;
-      position: relative;
-    }
-    .cat-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(212,121,154,.22); }
-    .cat-card.agotado { opacity: .72; }
-    .cat-card.agotado:hover { transform: none; box-shadow: 0 4px 20px rgba(0,0,0,.07); }
-    .badge-agotado {
-      position: absolute; top: 14px; left: 14px; z-index: 2;
-      background: rgba(60,60,60,.82); color: #fff;
-      font-size: .72rem; font-weight: 700; letter-spacing: .05em;
-      padding: .28rem .7rem; border-radius: 50px;
-      text-transform: uppercase;
-    }
-    .cat-img-wrap {
-      width: 100%; aspect-ratio: 1/1; overflow: hidden;
-      background: var(--perla);
-    }
-    .cat-img-wrap img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform .4s;
-    }
-    .cat-card:hover .cat-img-wrap img { transform: scale(1.05); }
-    .cat-info {
-      padding: 1.2rem 1.4rem 1.4rem;
-      display: flex; flex-direction: column; flex: 1;
-    }
-    .cat-tipo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem; margin-bottom: .2rem;
-      text-transform: capitalize;
-    }
-    .cat-meta {
-      font-size: .8rem; color: var(--gris);
-      text-transform: capitalize; margin-bottom: .7rem;
-    }
-    .cat-caption {
-      font-size: .85rem; color: var(--texto);
-      line-height: 1.6; font-weight: 300;
-      flex: 1; margin-bottom: 1rem;
-      display: -webkit-box; -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .cat-btn {
-      display: inline-flex; align-items: center; gap: .4rem;
-      background: #25D366; color: #fff;
-      padding: .55rem 1.1rem; border-radius: 50px;
-      font-size: .82rem; font-weight: 600;
-      text-decoration: none; align-self: flex-start;
-      transition: box-shadow .2s;
-    }
-    .cat-btn:hover { box-shadow: 0 6px 18px rgba(37,211,102,.4); }
-    .cat-btn-agotado {
-      display: inline-flex; align-items: center; gap: .4rem;
-      background: var(--perla); color: var(--gris);
-      padding: .55rem 1.1rem; border-radius: 50px;
-      font-size: .82rem; font-weight: 500;
-      border: 1px solid rgba(0,0,0,.1);
-      cursor: default; align-self: flex-start;
-    }
-    .catalogo-empty {
-      grid-column: 1/-1; text-align: center;
-      padding: 3rem; color: var(--gris); font-size: .95rem;
-    }
-    .catalogo-loading {
-      grid-column: 1/-1; text-align: center;
-      padding: 3rem; color: var(--gris);
-    }
-    .spinner {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 3px solid var(--champagne);
-      border-top-color: var(--rosa-dark);
-      animation: spin .8s linear infinite;
-      margin: 0 auto 1rem;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0; z-index: 999;
-      background: rgba(0,0,0,.72);
-      align-items: center; justify-content: center;
-      padding: 1rem;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal-box {
-      background: #fff; border-radius: 24px;
-      max-width: 520px; width: 100%;
-      max-height: 92vh; overflow-y: auto;
-      box-shadow: 0 24px 80px rgba(0,0,0,.35);
-      animation: modalIn .25s ease;
-      position: relative;
-    }
-    @keyframes modalIn {
-      from { opacity: 0; transform: translateY(24px) scale(.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    .modal-close {
-      position: absolute; top: 14px; right: 16px;
-      background: rgba(0,0,0,.12); border: none; cursor: pointer;
-      width: 32px; height: 32px; border-radius: 50%;
-      font-size: 1.1rem; display: flex; align-items: center;
-      justify-content: center; color: var(--texto);
-      transition: background .2s; z-index: 2;
-    }
-    .modal-close:hover { background: rgba(0,0,0,.22); }
-    .modal-img {
-      width: 100%; aspect-ratio: 1/1; object-fit: cover;
-      border-radius: 24px 24px 0 0;
-      display: block;
-    }
-    .modal-body {
-      padding: 1.4rem 1.6rem 1.8rem;
-    }
-    .modal-nombre {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem; margin-bottom: .3rem;
-      text-transform: capitalize;
-    }
-    .modal-badge-agotado {
-      display: inline-block;
-      background: rgba(60,60,60,.15); color: var(--gris);
-      font-size: .72rem; font-weight: 700; letter-spacing: .05em;
-      padding: .2rem .7rem; border-radius: 50px;
-      text-transform: uppercase; margin-bottom: .8rem;
-    }
-    .modal-caption {
-      font-size: .9rem; line-height: 1.75;
-      color: var(--texto); font-weight: 300;
-      white-space: pre-line; margin-bottom: 1.4rem;
-    }
-    .modal-btn {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: #25D366; color: #fff;
-      padding: .7rem 1.4rem; border-radius: 50px;
-      font-size: .9rem; font-weight: 600;
-      text-decoration: none; transition: box-shadow .2s;
-    }
-    .modal-btn:hover { box-shadow: 0 6px 20px rgba(37,211,102,.4); }
-    .modal-btn-agotado {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--perla); color: var(--gris);
-      padding: .7rem 1.4rem; border-radius: 50px;
-      font-size: .9rem; font-weight: 500;
-      border: 1px solid rgba(0,0,0,.1);
-    }
-    .cat-card { cursor: pointer; }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--texto); color: rgba(255,255,255,.7);
-      text-align: center; padding: 2rem;
-      font-size: .85rem;
-    }
-    footer strong { color: #fff; }
-
-    /* ── WHATSAPP FLOTANTE ── */
-    .wa-float {
-      position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 200;
-      width: 60px; height: 60px; border-radius: 50%;
-      background: #25D366;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem; text-decoration: none;
-      box-shadow: 0 6px 20px rgba(37,211,102,.5);
-      animation: pulse-wa 2.5s infinite;
-    }
-    @keyframes pulse-wa {
-      0%, 100% { box-shadow: 0 6px 20px rgba(37,211,102,.5); }
-      50%       { box-shadow: 0 6px 32px rgba(37,211,102,.8); }
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
-      .hero-visual { order: -1; }
-      .bow-circle { width: 260px; height: 260px; font-size: 6rem; }
-      nav ul { display: none; }
-      .btn-secondary { margin-left: 0; margin-top: .8rem; }
+    /* ── RESPONSIVE (propio del home) ── */
+    @media (max-width: 860px) {
+      .hero-in { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+      .hero p.lead { margin-inline: auto; }
+      .hero-cta { justify-content: center; }
+      .hero-art { order: -1; width: min(70%, 300px); }
+      .hero-tag { left: 50%; transform: translateX(-50%); }
+      .trust-in { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo">Santy<span>Kids</span></a>
-  <ul>
-    <li><a href="#productos">Productos</a></li>
-    <li><a href="#catalogo">Catálogo</a></li>
-    <li><a href="#nosotros">Nosotros</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-</nav>
+<!-- Íconos SVG (estilo Lucide) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+  <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01"/><path d="M15 9h.01"/></symbol>
+  <symbol id="i-shirt" viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+</svg>
 
+<a class="skip" href="catalogo.html">Saltar al catálogo</a>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="#" class="logo" aria-label="Santy Kids, inicio">Santy<span>Kids</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+      <svg class="ic"><use href="#i-menu"/></svg>
+    </button>
+    <nav aria-label="Principal">
+      <ul id="menu">
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="#hacemos">Qué hacemos</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a class="nav-cta" href="https://wa.me/527474005390?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20me%20interesan%20sus%20mo%C3%B1os" target="_blank" rel="noopener">
+          <svg class="ic" style="margin-right:.4rem"><use href="#i-chat"/></svg>Pedir por WhatsApp</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <h1>Accesorios y moda<br/>para tus <em>pequeños</em></h1>
-      <p>Moños artesanales, ropa y accesorios para bebés y niños.<br/>
-         Diseños únicos hechos a mano con los mejores materiales.</p>
-      <a href="https://wa.me/5217447501386?text=Hola!%20Vi%20su%20página%20y%20me%20interesan%20sus%20moños%20🎀" class="btn btn-primary" target="_blank">
-        Pedir por WhatsApp
-      </a>
-      <a href="#catalogo" class="btn btn-secondary">Ver catálogo</a>
+  <div class="wrap hero-in">
+    <div>
+      <span class="eyebrow"><svg class="ic"><use href="#i-sparkles"/></svg>Hecho a mano con amor</span>
+      <h1>Moños y accesorios para tus <em>pequeñas</em></h1>
+      <p class="lead">Diseños únicos para bebés y niñas, elaborados a mano con los mejores materiales. Envíos a todo México.</p>
+      <div class="hero-cta">
+        <a href="catalogo.html" class="btn btn-primary">Ver catálogo <svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a href="https://wa.me/527474005390?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20me%20interesan%20sus%20mo%C3%B1os" class="btn btn-ghost" target="_blank" rel="noopener">
+          <svg class="ic"><use href="#i-chat"/></svg>Escríbenos</a>
+      </div>
     </div>
-    <div class="hero-visual">
-      <div class="bow-circle">🎀</div>
-    </div>
-  </div>
-</section>
-
-<!-- PRODUCTOS -->
-<section class="productos" id="productos">
-  <div class="section-title">
-    <h2>Lo que encontrarás</h2>
-    <p>Todo para vestir y adornar a tus pequeños con amor</p>
-    <div class="divider"></div>
-  </div>
-  <div class="productos-grid">
-    <div class="card">
-      <div class="card-icon">🎀</div>
-      <h3>Moños Artesanales</h3>
-      <p>Satén, terciopelo, organza y tela. En todos los colores para niñas y bebés.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">👶</div>
-      <h3>Accesorios para Bebé</h3>
-      <p>Diademas, turbantes, clips y coronitas para recién nacidas y bebés.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">👗</div>
-      <h3>Ropa para Niños</h3>
-      <p>Prendas cómodas y adorables para bebés y niños. Calidad y estilo.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">🎁</div>
-      <h3>Sets y Regalos</h3>
-      <p>Conjuntos listos para regalar en baby shower, bautizo o cumpleaños.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">✂️</div>
-      <h3>Pedidos Personalizados</h3>
-      <p>Colores, tamaños y diseños a tu gusto. Ideal para uniformes y eventos.</p>
-    </div>
-    <div class="card">
-      <div class="card-icon">💝</div>
-      <h3>Mayoreo</h3>
-      <p>Precios especiales para revendedoras y tiendas. Pregunta por nuestros paquetes.</p>
+    <div class="hero-art">
+      <div class="hero-frame" id="heroFrame">
+        <svg viewBox="0 0 120 80" role="img" aria-label="Moño rosa">
+          <path d="M60 40 C40 10 8 12 10 38 C12 62 40 62 60 40Z" fill="#F9A8D4"/>
+          <path d="M60 40 C80 10 112 12 110 38 C108 62 80 62 60 40Z" fill="#F472B6"/>
+          <path d="M56 50 L44 76 L56 70Z" fill="#F472B6"/><path d="M64 50 L76 76 L64 70Z" fill="#F9A8D4"/>
+          <rect x="52" y="30" width="16" height="20" rx="6" fill="#BE185D"/>
+        </svg>
+      </div>
+      <div class="hero-tag" id="heroTag"><svg class="ic"><use href="#i-sparkles"/></svg><span id="heroTagText"></span></div>
     </div>
   </div>
 </section>
 
-<!-- CATÁLOGO -->
-<section class="catalogo" id="catalogo">
-  <div class="section-title">
-    <h2>Catálogo de Moños</h2>
-    <p>Nuestros productos más recientes — haz clic para pedir el tuyo</p>
-    <div class="divider"></div>
+<!-- CONFIANZA -->
+<div class="wrap trust">
+  <div class="trust-in">
+    <div class="trust-item"><svg class="ic"><use href="#i-heart"/></svg><div><strong>Hecho a mano</strong><span>Cada pieza con dedicación</span></div></div>
+    <div class="trust-item"><svg class="ic"><use href="#i-truck"/></svg><div><strong>Envíos a todo México</strong><span>Rápido y seguro</span></div></div>
+    <div class="trust-item"><svg class="ic"><use href="#i-chat"/></svg><div><strong>Atención por WhatsApp</strong><span>Te asesoramos personalmente</span></div></div>
   </div>
-  <div class="catalogo-grid" id="catalogoGrid">
-    <div class="catalogo-loading">
-      <div class="spinner"></div>
-      <p>Cargando productos...</p>
+</div>
+
+<!-- DESTACADOS -->
+<section id="catalogo">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Lo más nuevo</h2>
+      <p>Una probadita de lo último que llegó. Toca un producto para ver más y pedir el tuyo.</p>
+    </div>
+    <div class="destacados-track" id="destacadosTrack" aria-busy="true">
+      <div class="cat-card skeleton"><div class="cat-img"></div><div class="cat-info"><div class="sk-line" style="width:70%"></div><div class="sk-line" style="width:40%"></div></div></div>
+      <div class="cat-card skeleton"><div class="cat-img"></div><div class="cat-info"><div class="sk-line" style="width:70%"></div><div class="sk-line" style="width:40%"></div></div></div>
+      <div class="cat-card skeleton"><div class="cat-img"></div><div class="cat-info"><div class="sk-line" style="width:70%"></div><div class="sk-line" style="width:40%"></div></div></div>
+      <div class="cat-card skeleton"><div class="cat-img"></div><div class="cat-info"><div class="sk-line" style="width:70%"></div><div class="sk-line" style="width:40%"></div></div></div>
+    </div>
+    <p class="destacados-cta"><a href="catalogo.html" class="btn btn-ghost">Ver todo el catálogo <svg class="ic"><use href="#i-arrow"/></svg></a></p>
+  </div>
+</section>
+
+<!-- QUÉ HACEMOS -->
+<section class="alt" id="hacemos">
+  <div class="wrap">
+    <div class="section-title">
+      <h2>Lo que encontrarás</h2>
+      <p>Todo para vestir y adornar a tus pequeños con amor</p>
+    </div>
+    <div class="grid-cards">
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-sparkles"/></svg></div><h3>Moños artesanales</h3><p>Satén, terciopelo, organza y tela, en todos los colores para niñas y bebés.</p></div>
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-smile"/></svg></div><h3>Accesorios para bebé</h3><p>Diademas, turbantes, clips y coronitas para recién nacidas y bebés.</p></div>
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-shirt"/></svg></div><h3>Ropa para niños</h3><p>Prendas cómodas y adorables, con calidad y estilo.</p></div>
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-gift"/></svg></div><h3>Sets y regalos</h3><p>Conjuntos listos para regalar en baby shower, bautizo o cumpleaños.</p></div>
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-scissors"/></svg></div><h3>Pedidos personalizados</h3><p>Colores, tamaños y diseños a tu gusto. Ideal para uniformes y eventos.</p></div>
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-package"/></svg></div><h3>Mayoreo</h3><p>Precios especiales para revendedoras y tiendas. Pregunta por nuestros paquetes.</p></div>
     </div>
   </div>
 </section>
 
-<!-- POR QUÉ NOSOTROS -->
+<!-- NOSOTROS + COLORES -->
 <section id="nosotros">
-  <div class="section-title">
-    <h2>¿Por qué elegir Santy Kids?</h2>
-    <p>Más de un compromiso con la calidad artesanal</p>
-    <div class="divider"></div>
-  </div>
-  <div class="features-grid">
-    <div class="feature">
-      <div class="feature-icon">🤝</div>
-      <h3>Hechos a mano</h3>
-      <p>Cada moño se elabora manualmente con dedicación y cuidado.</p>
+  <div class="wrap">
+    <div class="section-title">
+      <h2>¿Por qué elegir Santy Kids?</h2>
+      <p>Más que un accesorio: un detalle hecho con cariño</p>
     </div>
-    <div class="feature">
-      <div class="feature-icon">🎨</div>
-      <h3>Colores vibrantes</h3>
-      <p>Materiales de alta calidad que conservan sus colores lavado tras lavado.</p>
+    <div class="grid-cards">
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-heart"/></svg></div><h3>Hechos a mano</h3><p>Cada moño se elabora manualmente con dedicación y cuidado.</p></div>
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-sparkles"/></svg></div><h3>Colores que duran</h3><p>Materiales de calidad que conservan su color lavado tras lavado.</p></div>
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-truck"/></svg></div><h3>Envíos a México</h3><p>Enviamos a todo el país de forma rápida y segura.</p></div>
+      <div class="info-card"><div class="icon-bubble"><svg class="ic"><use href="#i-chat"/></svg></div><h3>Atención personalizada</h3><p>Te ayudamos a encontrar el diseño perfecto.</p></div>
     </div>
-    <div class="feature">
-      <div class="feature-icon">📦</div>
-      <h3>Envíos a México</h3>
-      <p>Enviamos a todo el país de forma rápida y segura.</p>
+    <div class="section-title" style="margin-top:3.4rem">
+      <h2>Nuestra paleta</h2>
+      <p>Disponibles en los colores más bonitos</p>
     </div>
-    <div class="feature">
-      <div class="feature-icon">💬</div>
-      <h3>Atención personalizada</h3>
-      <p>Te asesoramos para encontrar el diseño perfecto para ti.</p>
-    </div>
-  </div>
-</section>
-
-<!-- PALETA DE COLORES -->
-<section class="colores">
-  <div class="section-title">
-    <h2>Nuestra paleta</h2>
-    <p>Disponibles en los colores más elegantes</p>
-    <div class="divider"></div>
-  </div>
-  <div class="paleta">
-    <div class="color-chip">
-      <div class="color-circle" style="background:#F8F4EF;border:1px solid #e0d8d0;"></div>
-      <span>Perla</span>
-    </div>
-    <div class="color-chip">
-      <div class="color-circle" style="background:#E8C4B8;"></div>
-      <span>Rosa Gold</span>
-    </div>
-    <div class="color-chip">
-      <div class="color-circle" style="background:#C9B8D8;"></div>
-      <span>Lila</span>
-    </div>
-    <div class="color-chip">
-      <div class="color-circle" style="background:#F7E7CE;"></div>
-      <span>Champagne</span>
-    </div>
-    <div class="color-chip">
-      <div class="color-circle" style="background:#f2a7c3;"></div>
-      <span>Rosa</span>
-    </div>
-    <div class="color-chip">
-      <div class="color-circle" style="background:#A8D8C8;"></div>
-      <span>Menta</span>
-    </div>
-    <div class="color-chip">
-      <div class="color-circle" style="background:#2C2C2C;"></div>
-      <span>Carbón</span>
-    </div>
-    <div class="color-chip">
-      <div class="color-circle" style="background:#fff;border:1px solid #ddd;"></div>
-      <span>Blanco</span>
+    <div class="paleta">
+      <div class="swatch"><i style="background:#F8F4EF"></i>Perla</div>
+      <div class="swatch"><i style="background:#E8C4B8"></i>Rosa gold</div>
+      <div class="swatch"><i style="background:#C9B8D8"></i>Lila</div>
+      <div class="swatch"><i style="background:#F7E7CE"></i>Champagne</div>
+      <div class="swatch"><i style="background:#F2A7C3"></i>Rosa</div>
+      <div class="swatch"><i style="background:#A8D8C8"></i>Menta</div>
+      <div class="swatch"><i style="background:#2C2C2C"></i>Carbón</div>
+      <div class="swatch"><i style="background:#FFFFFF"></i>Blanco</div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta">
-  <h2>¿Buscas algo especial para tu bebé? 🎀</h2>
-  <p>Escríbenos por WhatsApp y te ayudamos a encontrar el regalo o accesorio perfecto.</p>
-  <a href="https://wa.me/5217447501386?text=Hola!%20Quiero%20información%20sobre%20sus%20moños%20🎀" class="btn btn-white" target="_blank">
-    Ver catálogo completo
-  </a>
-  <a href="https://wa.me/5217447501386?text=Hola!%20Quiero%20hacer%20un%20pedido%20🎀" class="btn btn-wa" target="_blank">
-    💬 WhatsApp
-  </a>
+  <div class="wrap">
+    <h2>¿Buscas algo especial para tu bebé?</h2>
+    <p>Escríbenos por WhatsApp y te ayudamos a encontrar el regalo o accesorio perfecto.</p>
+    <a href="https://wa.me/527474005390?text=Hola!%20Quiero%20hacer%20un%20pedido" class="btn btn-light" target="_blank" rel="noopener">
+      <svg class="ic"><use href="#i-chat"/></svg>Hacer un pedido</a>
+  </div>
 </section>
 
 <!-- CONTACTO -->
 <section id="contacto">
-  <div class="contacto-inner">
+  <div class="wrap">
     <div class="section-title">
       <h2>Contáctanos</h2>
       <p>Estamos aquí para atenderte</p>
-      <div class="divider"></div>
     </div>
-    <div class="contacto-links">
-      <a href="https://wa.me/5217447501386" class="contacto-link" target="_blank">
-        <span class="icon">💬</span> WhatsApp
-      </a>
-      <a href="mailto:admin@santykids.com" class="contacto-link">
-        <span class="icon">✉️</span> admin@santykids.com
-      </a>
-      <a href="https://instagram.com/santykids" class="contacto-link" target="_blank">
-        <span class="icon">📸</span> @santykids
-      </a>
-      <a href="https://facebook.com/santykids" class="contacto-link" target="_blank">
-        <span class="icon">📘</span> Santy Kids
-      </a>
+    <div class="contact-links">
+      <a href="https://wa.me/527474005390" class="contact-link" target="_blank" rel="noopener"><svg class="ic"><use href="#i-chat"/></svg>WhatsApp</a>
+      <a href="mailto:admin@santykids.com" class="contact-link"><svg class="ic"><use href="#i-mail"/></svg>admin@santykids.com</a>
+      <a href="https://instagram.com/santykids" class="contact-link" target="_blank" rel="noopener"><svg class="ic"><use href="#i-instagram"/></svg>@santykids</a>
+      <a href="https://www.facebook.com/584493664743750" class="contact-link" target="_blank" rel="noopener"><svg class="ic"><use href="#i-facebook"/></svg>Santy Kids</a>
     </div>
-    <p style="margin-top:2rem; color:var(--gris); font-size:.9rem;">
-      📍 Florencio Villarreal, Guerrero, México
-    </p>
+    <p class="address"><svg class="ic"><use href="#i-pin"/></svg>Florencio Villarreal, Guerrero, México</p>
   </div>
 </section>
+</main>
 
-<!-- FOOTER -->
 <footer>
-  <p>© 2026 <strong>Santy Kids</strong> — Moños artesanales hechos con amor 🎀</p>
-  <p style="margin-top:.4rem; font-size:.8rem;">admin@santykids.com · santykids.com</p>
+  <p>© 2026 <strong>Santy Kids</strong> — Moños artesanales hechos con amor</p>
+  <p style="margin-top:.4rem;font-size:.85rem">admin@santykids.com · santykids.com</p>
 </footer>
 
+<a href="https://wa.me/527474005390?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20me%20interesan%20sus%20mo%C3%B1os" class="wa-float" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+  <svg class="ic"><use href="#i-chat"/></svg>
+</a>
+
 <!-- Modal de producto -->
-<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
-  <div class="modal-box">
-    <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
-    <img class="modal-img" id="modalImg" src="" alt="" />
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalNombre">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div class="modal-media">
+      <img class="modal-img" id="modalImg" src="" alt="" />
+      <div class="thumbs" id="modalThumbs"></div>
+    </div>
     <div class="modal-body">
-      <div class="modal-nombre" id="modalNombre"></div>
+      <div class="modal-cat" id="modalCat"></div>
+      <h2 id="modalNombre"></h2>
+      <div class="modal-precio" id="modalPrecio"></div>
       <div id="modalBadge"></div>
-      <div class="modal-caption" id="modalCaption"></div>
+      <p class="modal-cap" id="modalCaption"></p>
       <div id="modalBtn"></div>
     </div>
   </div>
 </div>
 
-<!-- WhatsApp flotante -->
-<a href="https://wa.me/5217447501386?text=Hola!%20Vi%20tu%20página%20y%20me%20interesan%20sus%20moños%20🎀"
-   class="wa-float" target="_blank" title="Escríbenos por WhatsApp">
-  💬
-</a>
-
+<script src="catalogo.js"></script>
 <script>
-(function () {
-  const grid      = document.getElementById('catalogoGrid');
-  const overlay   = document.getElementById('modalOverlay');
-  const modalImg  = document.getElementById('modalImg');
-  const modalNom  = document.getElementById('modalNombre');
-  const modalBadge= document.getElementById('modalBadge');
-  const modalCap  = document.getElementById('modalCaption');
-  const modalBtn  = document.getElementById('modalBtn');
-  const btnClose  = document.getElementById('modalClose');
-  const WA = 'https://wa.me/5217447501386';
-
-  function waLink(nombre) {
-    const txt = encodeURIComponent(`Hola! Vi su página y me interesa: ${nombre} 🎀`);
-    return `${WA}?text=${txt}`;
-  }
-
-  function openModal(p) {
-    const agotado = p.disponible === false;
-    const nombre  = p.nombre || `${p.tipo || ''} ${p.color || ''}`.trim() || 'Producto';
-
-    modalImg.src = p.imagen;
-    modalImg.alt = nombre;
-    modalNom.textContent = nombre;
-    modalBadge.innerHTML = agotado ? '<div class="modal-badge-agotado">Agotado</div>' : '';
-    modalCap.textContent = p.caption || '';
-    modalBtn.innerHTML = agotado
-      ? '<span class="modal-btn-agotado">😔 Sin stock por ahora</span>'
-      : `<a class="modal-btn" href="${waLink(nombre)}" target="_blank">💬 Pedir este producto</a>`;
-
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  btnClose.addEventListener('click', closeModal);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  function renderCards(products) {
-    if (!products.length) {
-      grid.innerHTML = '<div class="catalogo-empty">Próximamente nuestros productos aquí. ¡Síguenos en redes! 🎀</div>';
-      return;
-    }
-    grid.innerHTML = products.map((p, i) => {
-      const agotado = p.disponible === false;
-      const nombre  = p.nombre || `${p.tipo || ''} ${p.color || ''}`.trim();
-      const badge   = agotado ? '<div class="badge-agotado">Agotado</div>' : '';
-      const btn     = agotado
-        ? '<span class="cat-btn-agotado">😔 Sin stock por ahora</span>'
-        : '<span class="cat-btn">💬 Pedir este producto</span>';
-      return `
-        <div class="cat-card${agotado ? ' agotado' : ''}" data-idx="${i}">
-          ${badge}
-          <div class="cat-img-wrap">
-            <img src="${p.imagen}" alt="${nombre}" loading="lazy" />
-          </div>
-          <div class="cat-info">
-            <div class="cat-tipo">${nombre}</div>
-            <div class="cat-caption">${p.caption}</div>
-            ${btn}
-          </div>
-        </div>`;
-    }).join('');
-
-    // Abrir modal al hacer click en cualquier parte de la card
-    grid.querySelectorAll('.cat-card').forEach(card => {
-      card.addEventListener('click', () => {
-        openModal(products[Number(card.dataset.idx)]);
-      });
-    });
-  }
-
-  fetch('/catalog.json')
-    .then(r => r.ok ? r.json() : [])
-    .then(renderCards)
-    .catch(() => renderCards([]));
-})();
+  initSantyCatalog({ gridId: 'destacadosTrack', limit: 6, heroUpdate: true });
 </script>
 
 </body>

@@ -1,7 +1,7 @@
 function initSantyCatalog(opts) {
   const SUPABASE_URL = 'https://piaxnqcafqkilwjxwwdm.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_DN68M-5ySj8UhPymSQ4U7A_iIjv65bR'; // llave pública: solo lee productos publicados (RLS)
-  const WA = 'https://wa.me/5217447501386';
+  const WA = 'https://wa.me/5217474005390';
   const NUEVO_DIAS = 14;
 
   const $ = id => document.getElementById(id);

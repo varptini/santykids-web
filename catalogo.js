@@ -20,7 +20,7 @@ function initSantyCatalog(opts) {
   const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const precio = p => (p.precio === null || p.precio === undefined) ? '' : `$${Number(p.precio)} MXN`;
   const esNuevo = p => (Date.now() - new Date(p.created_at).getTime()) < NUEVO_DIAS * 864e5;
-  const waLink = (nombre, id) => `${WA}?text=${encodeURIComponent(`Hola! Me interesa: ${nombre} (#${id}) 🎀 https://santykids-web.vercel.app/p/${id}`)}`;
+  const waLink = (nombre, id) => `${WA}?text=${encodeURIComponent(`Hola! Me interesa: ${nombre} (#${id}) https://santykids-web.vercel.app/p/${id}`)}`;
   const ic = id => `<svg class="ic" aria-hidden="true"><use href="#${id}"/></svg>`;
 
   // ── Menú móvil ──

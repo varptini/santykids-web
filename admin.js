@@ -122,9 +122,11 @@ function renderProductList(list) {
               <td>${esc(p.stock)}</td>
               <td>${esc(p.estado)}</td>
               <td>
-                <button type="button" class="btn btn-ghost js-edit" data-id="${esc(p.id)}">Editar</button>
-                ${p.estado !== 'archivado' ? `<button type="button" class="btn btn-ghost js-archive" data-id="${esc(p.id)}">Archivar</button>` : ''}
-                <button type="button" class="btn btn-ghost js-delete" data-id="${esc(p.id)}">Eliminar</button>
+                <div class="row-actions">
+                  <button type="button" class="btn btn-ghost js-edit" data-id="${esc(p.id)}">Editar</button>
+                  ${p.estado !== 'archivado' ? `<button type="button" class="btn btn-ghost js-archive" data-id="${esc(p.id)}">Archivar</button>` : ''}
+                  <button type="button" class="btn btn-danger js-delete" data-id="${esc(p.id)}">Eliminar</button>
+                </div>
               </td>
             </tr>`;
         }).join('')}

@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
   if (!p || !p.imagenes?.length) return res.redirect(302, '/catalogo.html');
 
   const desc = String(p.descripcion ?? '').slice(0, 150);
+  const og = p.imagenes[0].replace('/storage/v1/object/public/', '/storage/v1/render/image/public/') + '?width=800&quality=75';
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.send(`<!doctype html>
 <html lang="es">
@@ -24,7 +25,7 @@ module.exports = async (req, res) => {
 <title>${esc(p.nombre)} · Santy Kids</title>
 <meta property="og:title" content="${esc(p.nombre)} · Santy Kids">
 <meta property="og:description" content="${esc(desc)}">
-<meta property="og:image" content="${esc(p.imagenes[0])}">
+<meta property="og:image" content="${esc(og)}">
 <meta property="og:url" content="${SITE}/p/${id}">
 <meta name="twitter:card" content="summary_large_image">
 <meta http-equiv="refresh" content="0;url=${dest}">

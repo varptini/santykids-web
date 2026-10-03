@@ -25,6 +25,7 @@ const fCategoria = $('fCategoria');
 const fStock = $('fStock');
 const fEstado = $('fEstado');
 const categoriaList = $('categoriaList');
+const buscar = $('buscar');
 const fImagenes = $('fImagenes');
 const fImagePreview = $('fImagePreview');
 
@@ -78,7 +79,19 @@ async function loadProducts() {
     return;
   }
   products = data;
-  renderProductList(products);
+  renderFiltered();
+}
+
+const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+function renderFiltered() {
+  const q = norm(buscar.value.trim()).replace(/^#/, '');
+  const list = q ? products.filter(p => norm(`${p.nombre} ${p.categoria} ${p.id} ${p.estado}`).includes(q)) : products;
+  if (q && !list.length) {
+    productList.innerHTML = '<p class="count">Sin resultados.</p>';
+    return;
+  }
+  renderProductList(list);
 }
 
 function renderProductList(list) {
@@ -240,6 +253,7 @@ newProductBtn.addEventListener('click', () => openForm(null));
 formCancelBtn.addEventListener('click', closeForm);
 productFormEl.addEventListener('submit', saveProduct);
 fImagenes.addEventListener('change', e => handleFileSelect(e.target.files));
+buscar.addEventListener('input', renderFiltered);
 
 sb.auth.getSession().then(({ data }) => onAuthReady(data.session));
 sb.auth.onAuthStateChange((_event, session) => onAuthReady(session));

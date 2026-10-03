@@ -29,6 +29,20 @@ const buscar = $('buscar');
 const fImagenes = $('fImagenes');
 const fImagePreview = $('fImagePreview');
 
+const ICON = {
+  dots: '<svg class="dots" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/></svg>',
+  edit: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>',
+  archive: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="2"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/></svg>',
+};
+
+const closeMenus = () => {
+  productList.querySelectorAll('.menu-panel').forEach(p => { p.hidden = true; });
+  productList.querySelectorAll('.js-menu').forEach(b => b.setAttribute('aria-expanded', 'false'));
+};
+document.addEventListener('click', closeMenus);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenus(); });
+
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const precio = p => (p.precio === null || p.precio === undefined) ? '' : `$${Number(p.precio)} MXN`;
 
@@ -122,10 +136,13 @@ function renderProductList(list) {
               <td>${esc(p.stock)}</td>
               <td>${esc(p.estado)}</td>
               <td>
-                <div class="row-actions">
-                  <button type="button" class="btn btn-ghost js-edit" data-id="${esc(p.id)}">Editar</button>
-                  ${p.estado !== 'archivado' ? `<button type="button" class="btn btn-ghost js-archive" data-id="${esc(p.id)}">Archivar</button>` : ''}
-                  <button type="button" class="btn btn-danger js-delete" data-id="${esc(p.id)}">Eliminar</button>
+                <div class="row-menu">
+                  <button type="button" class="menu-btn js-menu" aria-haspopup="true" aria-expanded="false" aria-label="Acciones de ${esc(p.nombre)}">${ICON.dots}</button>
+                  <div class="menu-panel" hidden>
+                    <button type="button" class="menu-item js-edit" data-id="${esc(p.id)}" title="Editar" aria-label="Editar">${ICON.edit}</button>
+                    ${p.estado !== 'archivado' ? `<button type="button" class="menu-item js-archive" data-id="${esc(p.id)}" title="Archivar" aria-label="Archivar">${ICON.archive}</button>` : ''}
+                    <button type="button" class="menu-item menu-delete js-delete" data-id="${esc(p.id)}" title="Eliminar" aria-label="Eliminar">${ICON.trash}</button>
+                  </div>
                 </div>
               </td>
             </tr>`;
@@ -140,6 +157,16 @@ function renderProductList(list) {
   });
   productList.querySelectorAll('.js-delete').forEach(btn => {
     btn.addEventListener('click', () => deleteProduct(Number(btn.dataset.id)));
+  });
+  productList.querySelectorAll('.js-menu').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const panel = btn.nextElementSibling;
+      const abrir = panel.hidden;
+      closeMenus();
+      panel.hidden = !abrir;
+      btn.setAttribute('aria-expanded', String(abrir));
+    });
   });
   populateCategoriaList();
 }

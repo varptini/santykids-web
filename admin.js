@@ -124,6 +124,7 @@ function renderProductList(list) {
               <td>
                 <button type="button" class="btn btn-ghost js-edit" data-id="${esc(p.id)}">Editar</button>
                 ${p.estado !== 'archivado' ? `<button type="button" class="btn btn-ghost js-archive" data-id="${esc(p.id)}">Archivar</button>` : ''}
+                <button type="button" class="btn btn-ghost js-delete" data-id="${esc(p.id)}">Eliminar</button>
               </td>
             </tr>`;
         }).join('')}
@@ -134,6 +135,9 @@ function renderProductList(list) {
   });
   productList.querySelectorAll('.js-archive').forEach(btn => {
     btn.addEventListener('click', () => archiveProduct(Number(btn.dataset.id)));
+  });
+  productList.querySelectorAll('.js-delete').forEach(btn => {
+    btn.addEventListener('click', () => deleteProduct(Number(btn.dataset.id)));
   });
   populateCategoriaList();
 }
@@ -210,6 +214,20 @@ async function archiveProduct(id) {
   const { error } = await sb.from('products').update({ estado: 'archivado' }).eq('id', id);
   if (error) {
     listMsg.textContent = error.message;
+    return;
+  }
+  await loadProducts();
+}
+
+async function deleteProduct(id) {
+  if (!confirm('¿Eliminar este producto? No se puede deshacer.')) return;
+  const { data, error } = await sb.from('products').delete().eq('id', id).select();
+  if (error) {
+    listMsg.textContent = error.message;
+    return;
+  }
+  if (!data.length) {
+    listMsg.textContent = 'No se pudo eliminar el producto.';
     return;
   }
   await loadProducts();

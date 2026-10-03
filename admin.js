@@ -36,6 +36,12 @@ const ICON = {
   trash: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12"/></svg>',
 };
 
+const ESTADO = {
+  publicado: { label: 'Publicado', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>' },
+  borrador: { label: 'Borrador', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>' },
+  archivado: { label: 'Archivado', icon: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="2"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"/><path d="M10 13h4"/></svg>' },
+};
+
 const closeMenus = () => {
   productList.querySelectorAll('.menu-panel').forEach(p => { p.hidden = true; });
   productList.querySelectorAll('.js-menu').forEach(b => b.setAttribute('aria-expanded', 'false'));
@@ -118,7 +124,7 @@ function renderProductList(list) {
     <table class="admin-table">
       <thead>
         <tr>
-          <th></th><th>Nombre</th><th>ID</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th></th>
+          <th></th><th>Producto</th><th>Precio</th><th>Stock</th><th>Estado</th><th></th>
         </tr>
       </thead>
       <tbody>
@@ -129,12 +135,13 @@ function renderProductList(list) {
           return `
             <tr>
               <td>${thumb}</td>
-              <td>${esc(p.nombre)}</td>
-              <td>#${esc(p.id)}</td>
-              <td>${esc(p.categoria)}</td>
+              <td>
+                <strong>${esc(p.nombre)}</strong>
+                <div class="sub">#${esc(p.id)}${p.categoria ? ` · ${esc(p.categoria)}` : ''}</div>
+              </td>
               <td>${esc(precio(p))}</td>
               <td>${esc(p.stock)}</td>
-              <td>${esc(p.estado)}</td>
+              <td><span class="estado estado-${esc(p.estado)}" title="${esc(ESTADO[p.estado]?.label ?? p.estado)}" aria-label="${esc(ESTADO[p.estado]?.label ?? p.estado)}">${ESTADO[p.estado]?.icon ?? ''}</span></td>
               <td>
                 <div class="row-menu">
                   <button type="button" class="menu-btn js-menu" aria-haspopup="true" aria-expanded="false" aria-label="Acciones de ${esc(p.nombre)}">${ICON.dots}</button>

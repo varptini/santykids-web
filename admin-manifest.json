@@ -2,7 +2,7 @@
   "name": "Panel Santy Kids",
   "short_name": "Santy Kids",
   "start_url": "/admin.html",
-  "scope": "/admin.html",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#fdf2f8",
   "theme_color": "#be185d",

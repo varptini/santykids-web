@@ -20,7 +20,7 @@ function initSantyCatalog(opts) {
   const norm = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const precio = p => (p.precio === null || p.precio === undefined) ? '' : `$${Number(p.precio)} MXN`;
   const esNuevo = p => (Date.now() - new Date(p.created_at).getTime()) < NUEVO_DIAS * 864e5;
-  const waLink = (nombre, id, imgUrl) => `${WA}?text=${encodeURIComponent(`Hola! Vi su página y me interesa: ${nombre} (#${id}) 🎀\n${imgUrl}`)}`;
+  const waLink = (nombre, id) => `${WA}?text=${encodeURIComponent(`Hola! Me interesa: ${nombre} (#${id}) 🎀 https://santykids-web.vercel.app/p/${id}`)}`;
   const ic = id => `<svg class="ic" aria-hidden="true"><use href="#${id}"/></svg>`;
 
   // ── Menú móvil ──
@@ -50,7 +50,7 @@ function initSantyCatalog(opts) {
     modalCap.textContent = [p.descripcion, p.hashtags].filter(Boolean).join('\n\n');
     modalBtn.innerHTML = agotado
       ? '<span class="soldout">Sin stock por ahora</span>'
-      : `<a class="btn btn-wa" href="${waLink(p.nombre, p.id, p.imagenes[0])}" target="_blank" rel="noopener">${ic('i-chat')}Pedir por WhatsApp</a>`;
+      : `<a class="btn btn-wa" href="${waLink(p.nombre, p.id)}" target="_blank" rel="noopener">${ic('i-chat')}Pedir por WhatsApp</a>`;
     thumbs.innerHTML = p.imagenes.length > 1
       ? p.imagenes.map((u, k) => `<button type="button" aria-label="Ver foto ${k + 1}"><img src="${esc(u)}" alt="" /></button>`).join('') : '';
     thumbs.querySelectorAll('button').forEach((t, k) => t.addEventListener('click', () => show(k)));
@@ -149,5 +149,8 @@ function initSantyCatalog(opts) {
     .then(data => {
       products = data.filter(p => p.imagenes && p.imagenes.length);
       renderChips(); render(); renderHero();
+      const pid = new URLSearchParams(location.search).get('producto');
+      const abrir = products.find(x => String(x.id) === pid);
+      if (abrir) openModal(abrir);
     });
 }
